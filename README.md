@@ -1,2 +1,2 @@
 # Secure notes
-encrypted notes storage.
+Cross-platform, RSA encrypted note taking app.
