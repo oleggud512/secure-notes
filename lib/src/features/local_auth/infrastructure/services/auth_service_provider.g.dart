@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_service_impl.dart';
+part of 'auth_service_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authServiceHash() => r'9eba168e712f57a5952ac724422ffdaea1cfb865';
+String _$authServiceHash() => r'9cd10c2ee9e87b4fc5ec802e5efce2ae863dbfa5';
 
 /// See also [authService].
 @ProviderFor(authService)
@@ -21,7 +21,7 @@ final authServiceProvider = Provider<AuthService>.internal(
 
 typedef AuthServiceRef = ProviderRef<AuthService>;
 String _$reevaluateLisenableHash() =>
-    r'b934238a1daead9ab060d642c1bebed742518932';
+    r'b70e025653855bce44637f37c20ef78a08323a67';
 
 /// See also [reevaluateLisenable].
 @ProviderFor(reevaluateLisenable)
@@ -36,4 +36,5 @@ final reevaluateLisenableProvider = AutoDisposeProvider<Listenable>.internal(
 );
 
 typedef ReevaluateLisenableRef = AutoDisposeProviderRef<Listenable>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

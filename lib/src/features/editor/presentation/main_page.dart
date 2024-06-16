@@ -7,7 +7,7 @@ import 'package:editor_riverpod/src/features/editor/presentation/main_drawer/mai
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../local_auth/infrastructure/services/auth_service_impl.dart';
+import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/auth_service_provider.dart';
 
 @RoutePage()
 class MainPage extends ConsumerWidget {

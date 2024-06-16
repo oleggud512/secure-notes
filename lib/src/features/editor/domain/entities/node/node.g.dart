@@ -6,7 +6,7 @@ part of 'node.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
+_$NodeImpl _$$NodeImplFromJson(Map<String, dynamic> json) => _$NodeImpl(
       id: json['id'] as String,
       parent: json['parent'] as String?,
       title: json['title'] as String,
@@ -16,7 +16,8 @@ _$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$_NodeToJson(_$_Node instance) => <String, dynamic>{
+Map<String, dynamic> _$$NodeImplToJson(_$NodeImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'parent': instance.parent,
       'title': instance.title,
@@ -33,7 +34,7 @@ const _$NodeStateEnumMap = {
   NodeState.unchanged: 'unchanged',
 };
 
-_$Folder _$$FolderFromJson(Map<String, dynamic> json) => _$Folder(
+_$FolderImpl _$$FolderImplFromJson(Map<String, dynamic> json) => _$FolderImpl(
       id: json['id'] as String,
       parent: json['parent'] as String?,
       title: json['title'] as String? ?? "",
@@ -43,7 +44,8 @@ _$Folder _$$FolderFromJson(Map<String, dynamic> json) => _$Folder(
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$FolderToJson(_$Folder instance) => <String, dynamic>{
+Map<String, dynamic> _$$FolderImplToJson(_$FolderImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'parent': instance.parent,
       'title': instance.title,
@@ -53,7 +55,7 @@ Map<String, dynamic> _$$FolderToJson(_$Folder instance) => <String, dynamic>{
       'type': instance.$type,
     };
 
-_$Note _$$NoteFromJson(Map<String, dynamic> json) => _$Note(
+_$NoteImpl _$$NoteImplFromJson(Map<String, dynamic> json) => _$NoteImpl(
       id: json['id'] as String,
       parent: json['parent'] as String?,
       title: json['title'] as String? ?? "",
@@ -64,7 +66,8 @@ _$Note _$$NoteFromJson(Map<String, dynamic> json) => _$Note(
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$NoteToJson(_$Note instance) => <String, dynamic>{
+Map<String, dynamic> _$$NoteImplToJson(_$NoteImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'parent': instance.parent,
       'title': instance.title,

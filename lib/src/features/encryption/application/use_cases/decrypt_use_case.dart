@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:editor_riverpod/src/features/encryption/application/services/aes_encryption/aes_encryption_service.dart';
+import 'package:editor_riverpod/src/features/encryption/infrastructure/services/aes_encryption/aes_encryption_service_impl.dart';
 import 'package:pointycastle/export.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,7 +20,8 @@ abstract interface class DecryptUseCase {
 }
 
 class DecryptUseCaseImpl implements DecryptUseCase {
-  RSAEncryptionService encrServ;
+  // RSAEncryptionService encrServ;
+  AESEncryptionService encrServ;
   KeyValueStorageDataSource runtimeStorage;
   KeyPemConverter converter;
 
@@ -29,22 +32,40 @@ class DecryptUseCaseImpl implements DecryptUseCase {
     if (data.isEmpty) {
       return data;
     }
-    final bytes = base64Decode(data);
-    final privateKey = await _getPrivateKey();
-    final encrypted = encrServ.decrypt(bytes, privateKey);
-    return utf8.decode(encrypted);
+    
+    // return decryptRsa(data);
+    return _decryptAes(data);
   }
 
-  Future<RSAPrivateKey> _getPrivateKey() async {
-    final pem = await runtimeStorage.read(StorageKeys.decryptedPrivateKey);
-    return converter.parsePrivateKey(pem!);
+  // Future<String> decryptRsa(String data) async {
+  //   final bytes = base64Decode(data);
+  //   final privateKey = await _getPrivateKey();
+  //   final encrypted = encrServ.decrypt(bytes, privateKey);
+  //   return utf8.decode(encrypted);
+  // }
+
+  // Future<RSAPrivateKey> _getPrivateKey() async {
+  //   final pem = await runtimeStorage.read(StorageKeys.decryptedPrivateKey);
+  //   return converter.parsePrivateKey(pem!);
+  // }
+
+  Future<String> _decryptAes(String data) async {
+    final key = await _getCurrentAesKey();
+    return encrServ.decrypt(data, key);
+  }
+
+
+  Future<String> _getCurrentAesKey() async {
+    final res = await runtimeStorage.read(StorageKeys.aesKey);
+    return res!;
   }
 }
 
 @riverpod
 DecryptUseCase decryptUseCase(DecryptUseCaseRef ref) {
   return DecryptUseCaseImpl(
-    RSAEncryptionServiceImpl.instance, 
+    // RSAEncryptionServiceImpl.instance, 
+    AESEncryptionServiceImpl.instance, 
     KeyPemConverterImpl.instance, 
     ref.watch(runtimeStorageProvider)
   );

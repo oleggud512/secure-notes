@@ -88,8 +88,8 @@ class NodeWidgetControllerImplProvider
         NodeWidgetState> {
   /// See also [NodeWidgetControllerImpl].
   NodeWidgetControllerImplProvider(
-    this.nodeId,
-  ) : super.internal(
+    String? nodeId,
+  ) : this._internal(
           () => NodeWidgetControllerImpl()..nodeId = nodeId,
           from: nodeWidgetControllerImplProvider,
           name: r'nodeWidgetControllerImplProvider',
@@ -100,9 +100,51 @@ class NodeWidgetControllerImplProvider
           dependencies: NodeWidgetControllerImplFamily._dependencies,
           allTransitiveDependencies:
               NodeWidgetControllerImplFamily._allTransitiveDependencies,
+          nodeId: nodeId,
         );
 
+  NodeWidgetControllerImplProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.nodeId,
+  }) : super.internal();
+
   final String? nodeId;
+
+  @override
+  FutureOr<NodeWidgetState> runNotifierBuild(
+    covariant NodeWidgetControllerImpl notifier,
+  ) {
+    return notifier.build(
+      nodeId,
+    );
+  }
+
+  @override
+  Override overrideWith(NodeWidgetControllerImpl Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: NodeWidgetControllerImplProvider._internal(
+        () => create()..nodeId = nodeId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        nodeId: nodeId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<NodeWidgetControllerImpl,
+      NodeWidgetState> createElement() {
+    return _NodeWidgetControllerImplProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -116,14 +158,21 @@ class NodeWidgetControllerImplProvider
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin NodeWidgetControllerImplRef
+    on AutoDisposeAsyncNotifierProviderRef<NodeWidgetState> {
+  /// The parameter `nodeId` of this provider.
+  String? get nodeId;
+}
+
+class _NodeWidgetControllerImplProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<NodeWidgetControllerImpl,
+        NodeWidgetState> with NodeWidgetControllerImplRef {
+  _NodeWidgetControllerImplProviderElement(super.provider);
 
   @override
-  FutureOr<NodeWidgetState> runNotifierBuild(
-    covariant NodeWidgetControllerImpl notifier,
-  ) {
-    return notifier.build(
-      nodeId,
-    );
-  }
+  String? get nodeId => (origin as NodeWidgetControllerImplProvider).nodeId;
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

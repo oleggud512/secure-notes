@@ -4,6 +4,8 @@ import 'package:editor_riverpod/src/core/common/as_bytes.dart';
 import 'package:editor_riverpod/src/core/common/constants/keys.dart';
 import 'package:editor_riverpod/src/core/external/data_sources/key_value_storage/secure_storage_provider.dart';
 import 'package:editor_riverpod/src/core/infrastructure/data_sources/key_value_storage/key_value_storage_data_source.dart';
+import 'package:editor_riverpod/src/features/encryption/application/services/aes_encryption/aes_encryption_service.dart';
+import 'package:editor_riverpod/src/features/encryption/infrastructure/services/aes_encryption/aes_encryption_service_impl.dart';
 import 'package:pointycastle/export.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,7 +21,8 @@ abstract interface class EncryptUseCase {
 }
 
 class EncryptUseCaseImpl implements EncryptUseCase {
-  RSAEncryptionService encrServ;
+  // RSAEncryptionService encrServ;
+  AESEncryptionService encrServ;
   KeyValueStorageDataSource secureStorage;
   KeyPemConverter converter;
 
@@ -30,22 +33,38 @@ class EncryptUseCaseImpl implements EncryptUseCase {
     if (data.isEmpty) {
       return data;
     }
-    final bytes = data.asBytes;
-    final privateKey = await _getPublicKey();
-    final encrypted = encrServ.encrypt(bytes, privateKey);
-    return base64Encode(encrypted);
+    // return encryptRsa(data);
+    return _encryptAes(data);
   }
 
-  Future<RSAPublicKey> _getPublicKey() async {
-    final pem = await secureStorage.read(StorageKeys.publicKey);
-    return converter.parsePublicKey(pem!);
+  // Future<String> encryptRsa(String data) async {
+  //   final bytes = data.asBytes;
+  //   final privateKey = await _getPublicKey();
+  //   final encrypted = encrServ.encrypt(bytes, privateKey);
+  //   return base64Encode(encrypted);
+  // }
+
+  // Future<RSAPublicKey> _getPublicKey() async {
+  //   final pem = await secureStorage.read(StorageKeys.publicKey);
+  //   return converter.parsePublicKey(pem!);
+  // }
+
+  Future<String> _encryptAes(String data) async {
+    final key = await _getCurrentAesKey();
+    return encrServ.encrypt(data, key);
+  }
+
+  Future<String> _getCurrentAesKey() async {
+    final res = await secureStorage.read(StorageKeys.aesKey);
+    return res!;
   }
 }
 
 @riverpod
 EncryptUseCase encryptUseCase(EncryptUseCaseRef ref) {
   return EncryptUseCaseImpl(
-    RSAEncryptionServiceImpl.instance, 
+    // RSAEncryptionServiceImpl.instance, 
+    AESEncryptionServiceImpl.instance,
     KeyPemConverterImpl.instance, 
     ref.watch(secureStorageProvider)
   );

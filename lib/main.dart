@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:editor_riverpod/src/app.dart';
+import 'package:editor_riverpod/src/core/common/constants/keys.dart';
+import 'package:editor_riverpod/src/core/external/data_sources/key_value_storage/secure_storage_provider.dart';
 import 'package:editor_riverpod/src/core/infrastructure/data_sources/database/database_provider.dart';
 import 'package:editor_riverpod/src/core/presentation/theme/theme_mode_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,11 @@ void main() async {
   // initialize database
   final db = await container.read(databaseProvider.future);
   await container.read(themeModeControllerProvider.notifier).init();
+
+  // await container.read(secureStorageProvider).delete(StorageKeys.hashedPassword);
+  // await container.read(secureStorageProvider).delete(StorageKeys.decryptedPrivateKey);
+  // await container.read(secureStorageProvider).delete(StorageKeys.encryptedPrivateKey);
+  // await container.read(secureStorageProvider).delete(StorageKeys.publicKey);
   // await FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true)).deleteAll();
   // await db.rawDelete('DELETE FROM notes');
   // await db.rawDelete('DELETE FROM nodes');

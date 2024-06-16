@@ -12,7 +12,7 @@ part of 'change_password_dialog_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ChangePasswordDialogState {
@@ -64,23 +64,23 @@ class _$ChangePasswordDialogStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ChangePasswordStateCopyWith<$Res>
+abstract class _$$ChangePasswordStateImplCopyWith<$Res>
     implements $ChangePasswordDialogStateCopyWith<$Res> {
-  factory _$$_ChangePasswordStateCopyWith(_$_ChangePasswordState value,
-          $Res Function(_$_ChangePasswordState) then) =
-      __$$_ChangePasswordStateCopyWithImpl<$Res>;
+  factory _$$ChangePasswordStateImplCopyWith(_$ChangePasswordStateImpl value,
+          $Res Function(_$ChangePasswordStateImpl) then) =
+      __$$ChangePasswordStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String oldPassword, String newPassword});
 }
 
 /// @nodoc
-class __$$_ChangePasswordStateCopyWithImpl<$Res>
+class __$$ChangePasswordStateImplCopyWithImpl<$Res>
     extends _$ChangePasswordDialogStateCopyWithImpl<$Res,
-        _$_ChangePasswordState>
-    implements _$$_ChangePasswordStateCopyWith<$Res> {
-  __$$_ChangePasswordStateCopyWithImpl(_$_ChangePasswordState _value,
-      $Res Function(_$_ChangePasswordState) _then)
+        _$ChangePasswordStateImpl>
+    implements _$$ChangePasswordStateImplCopyWith<$Res> {
+  __$$ChangePasswordStateImplCopyWithImpl(_$ChangePasswordStateImpl _value,
+      $Res Function(_$ChangePasswordStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -89,7 +89,7 @@ class __$$_ChangePasswordStateCopyWithImpl<$Res>
     Object? oldPassword = null,
     Object? newPassword = null,
   }) {
-    return _then(_$_ChangePasswordState(
+    return _then(_$ChangePasswordStateImpl(
       oldPassword: null == oldPassword
           ? _value.oldPassword
           : oldPassword // ignore: cast_nullable_to_non_nullable
@@ -104,8 +104,8 @@ class __$$_ChangePasswordStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangePasswordState implements _ChangePasswordState {
-  _$_ChangePasswordState({this.oldPassword = "", this.newPassword = ""});
+class _$ChangePasswordStateImpl implements _ChangePasswordState {
+  _$ChangePasswordStateImpl({this.oldPassword = "", this.newPassword = ""});
 
   @override
   @JsonKey()
@@ -120,10 +120,10 @@ class _$_ChangePasswordState implements _ChangePasswordState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangePasswordState &&
+            other is _$ChangePasswordStateImpl &&
             (identical(other.oldPassword, oldPassword) ||
                 other.oldPassword == oldPassword) &&
             (identical(other.newPassword, newPassword) ||
@@ -136,15 +136,15 @@ class _$_ChangePasswordState implements _ChangePasswordState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangePasswordStateCopyWith<_$_ChangePasswordState> get copyWith =>
-      __$$_ChangePasswordStateCopyWithImpl<_$_ChangePasswordState>(
+  _$$ChangePasswordStateImplCopyWith<_$ChangePasswordStateImpl> get copyWith =>
+      __$$ChangePasswordStateImplCopyWithImpl<_$ChangePasswordStateImpl>(
           this, _$identity);
 }
 
 abstract class _ChangePasswordState implements ChangePasswordDialogState {
   factory _ChangePasswordState(
       {final String oldPassword,
-      final String newPassword}) = _$_ChangePasswordState;
+      final String newPassword}) = _$ChangePasswordStateImpl;
 
   @override
   String get oldPassword;
@@ -152,6 +152,6 @@ abstract class _ChangePasswordState implements ChangePasswordDialogState {
   String get newPassword;
   @override
   @JsonKey(ignore: true)
-  _$$_ChangePasswordStateCopyWith<_$_ChangePasswordState> get copyWith =>
+  _$$ChangePasswordStateImplCopyWith<_$ChangePasswordStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

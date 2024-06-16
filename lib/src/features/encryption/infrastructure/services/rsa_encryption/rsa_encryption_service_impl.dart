@@ -39,7 +39,7 @@ class RSAEncryptionServiceImpl implements RSAEncryptionService {
         secureRandom,
       ));
 
-    return keyGen.generateKeyPair();
+    return keyGen.generateKeyPair() as AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>;
   }
 
   @override

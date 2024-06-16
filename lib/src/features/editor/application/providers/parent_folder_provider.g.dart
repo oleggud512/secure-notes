@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef ParentFolderRef = AutoDisposeProviderRef<ChildDeleter>;
-
 /// See also [parentFolder].
 @ProviderFor(parentFolder)
 const parentFolderProvider = ParentFolderFamily();
@@ -77,10 +75,10 @@ class ParentFolderFamily extends Family<ChildDeleter> {
 class ParentFolderProvider extends AutoDisposeProvider<ChildDeleter> {
   /// See also [parentFolder].
   ParentFolderProvider(
-    this.nodeId,
-  ) : super.internal(
+    String? nodeId,
+  ) : this._internal(
           (ref) => parentFolder(
-            ref,
+            ref as ParentFolderRef,
             nodeId,
           ),
           from: parentFolderProvider,
@@ -92,9 +90,43 @@ class ParentFolderProvider extends AutoDisposeProvider<ChildDeleter> {
           dependencies: ParentFolderFamily._dependencies,
           allTransitiveDependencies:
               ParentFolderFamily._allTransitiveDependencies,
+          nodeId: nodeId,
         );
 
+  ParentFolderProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.nodeId,
+  }) : super.internal();
+
   final String? nodeId;
+
+  @override
+  Override overrideWith(
+    ChildDeleter Function(ParentFolderRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ParentFolderProvider._internal(
+        (ref) => create(ref as ParentFolderRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        nodeId: nodeId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<ChildDeleter> createElement() {
+    return _ParentFolderProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -109,4 +141,18 @@ class ParentFolderProvider extends AutoDisposeProvider<ChildDeleter> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin ParentFolderRef on AutoDisposeProviderRef<ChildDeleter> {
+  /// The parameter `nodeId` of this provider.
+  String? get nodeId;
+}
+
+class _ParentFolderProviderElement
+    extends AutoDisposeProviderElement<ChildDeleter> with ParentFolderRef {
+  _ParentFolderProviderElement(super.provider);
+
+  @override
+  String? get nodeId => (origin as ParentFolderProvider).nodeId;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

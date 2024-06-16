@@ -12,7 +12,7 @@ part of 'local_auth_page_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$LocalAuthPageState {
@@ -63,22 +63,22 @@ class _$LocalAuthPageStateCopyWithImpl<$Res, $Val extends LocalAuthPageState>
 }
 
 /// @nodoc
-abstract class _$$_LocalAuthPageStateCopyWith<$Res>
+abstract class _$$LocalAuthPageStateImplCopyWith<$Res>
     implements $LocalAuthPageStateCopyWith<$Res> {
-  factory _$$_LocalAuthPageStateCopyWith(_$_LocalAuthPageState value,
-          $Res Function(_$_LocalAuthPageState) then) =
-      __$$_LocalAuthPageStateCopyWithImpl<$Res>;
+  factory _$$LocalAuthPageStateImplCopyWith(_$LocalAuthPageStateImpl value,
+          $Res Function(_$LocalAuthPageStateImpl) then) =
+      __$$LocalAuthPageStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String password, String? error});
 }
 
 /// @nodoc
-class __$$_LocalAuthPageStateCopyWithImpl<$Res>
-    extends _$LocalAuthPageStateCopyWithImpl<$Res, _$_LocalAuthPageState>
-    implements _$$_LocalAuthPageStateCopyWith<$Res> {
-  __$$_LocalAuthPageStateCopyWithImpl(
-      _$_LocalAuthPageState _value, $Res Function(_$_LocalAuthPageState) _then)
+class __$$LocalAuthPageStateImplCopyWithImpl<$Res>
+    extends _$LocalAuthPageStateCopyWithImpl<$Res, _$LocalAuthPageStateImpl>
+    implements _$$LocalAuthPageStateImplCopyWith<$Res> {
+  __$$LocalAuthPageStateImplCopyWithImpl(_$LocalAuthPageStateImpl _value,
+      $Res Function(_$LocalAuthPageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_LocalAuthPageStateCopyWithImpl<$Res>
     Object? password = null,
     Object? error = freezed,
   }) {
-    return _then(_$_LocalAuthPageState(
+    return _then(_$LocalAuthPageStateImpl(
       password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_LocalAuthPageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LocalAuthPageState implements _LocalAuthPageState {
-  _$_LocalAuthPageState({this.password = "", this.error});
+class _$LocalAuthPageStateImpl implements _LocalAuthPageState {
+  _$LocalAuthPageStateImpl({this.password = "", this.error});
 
   @override
   @JsonKey()
@@ -117,10 +117,10 @@ class _$_LocalAuthPageState implements _LocalAuthPageState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LocalAuthPageState &&
+            other is _$LocalAuthPageStateImpl &&
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.error, error) || other.error == error));
@@ -132,14 +132,14 @@ class _$_LocalAuthPageState implements _LocalAuthPageState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LocalAuthPageStateCopyWith<_$_LocalAuthPageState> get copyWith =>
-      __$$_LocalAuthPageStateCopyWithImpl<_$_LocalAuthPageState>(
+  _$$LocalAuthPageStateImplCopyWith<_$LocalAuthPageStateImpl> get copyWith =>
+      __$$LocalAuthPageStateImplCopyWithImpl<_$LocalAuthPageStateImpl>(
           this, _$identity);
 }
 
 abstract class _LocalAuthPageState implements LocalAuthPageState {
   factory _LocalAuthPageState({final String password, final String? error}) =
-      _$_LocalAuthPageState;
+      _$LocalAuthPageStateImpl;
 
   @override
   String get password;
@@ -147,6 +147,6 @@ abstract class _LocalAuthPageState implements LocalAuthPageState {
   String? get error;
   @override
   @JsonKey(ignore: true)
-  _$$_LocalAuthPageStateCopyWith<_$_LocalAuthPageState> get copyWith =>
+  _$$LocalAuthPageStateImplCopyWith<_$LocalAuthPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

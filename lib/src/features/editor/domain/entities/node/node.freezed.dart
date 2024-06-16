@@ -12,7 +12,7 @@ part of 'node.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Node _$NodeFromJson(Map<String, dynamic> json) {
   switch (json['type']) {
@@ -50,7 +50,7 @@ mixin _$Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)
+            List<Node> children)
         folder,
     required TResult Function(
             String id,
@@ -76,7 +76,7 @@ mixin _$Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult? Function(
             String id,
@@ -102,7 +102,7 @@ mixin _$Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult Function(
             String id,
@@ -207,9 +207,10 @@ class _$NodeCopyWithImpl<$Res, $Val extends Node>
 }
 
 /// @nodoc
-abstract class _$$_NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
-  factory _$$_NodeCopyWith(_$_Node value, $Res Function(_$_Node) then) =
-      __$$_NodeCopyWithImpl<$Res>;
+abstract class _$$NodeImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
+  factory _$$NodeImplCopyWith(
+          _$NodeImpl value, $Res Function(_$NodeImpl) then) =
+      __$$NodeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -222,9 +223,10 @@ abstract class _$$_NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$_Node>
-    implements _$$_NodeCopyWith<$Res> {
-  __$$_NodeCopyWithImpl(_$_Node _value, $Res Function(_$_Node) _then)
+class __$$NodeImplCopyWithImpl<$Res>
+    extends _$NodeCopyWithImpl<$Res, _$NodeImpl>
+    implements _$$NodeImplCopyWith<$Res> {
+  __$$NodeImplCopyWithImpl(_$NodeImpl _value, $Res Function(_$NodeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -237,7 +239,7 @@ class __$$_NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$_Node>
     Object? updatedAt = null,
     Object? state = null,
   }) {
-    return _then(_$_Node(
+    return _then(_$NodeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -268,8 +270,8 @@ class __$$_NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$_Node>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Node implements _Node {
-  _$_Node(
+class _$NodeImpl implements _Node {
+  _$NodeImpl(
       {required this.id,
       this.parent,
       required this.title,
@@ -279,7 +281,8 @@ class _$_Node implements _Node {
       final String? $type})
       : $type = $type ?? 'default';
 
-  factory _$_Node.fromJson(Map<String, dynamic> json) => _$$_NodeFromJson(json);
+  factory _$NodeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NodeImplFromJson(json);
 
   @override
   final String id;
@@ -303,10 +306,10 @@ class _$_Node implements _Node {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Node &&
+            other is _$NodeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.title, title) || other.title == title) &&
@@ -325,8 +328,8 @@ class _$_Node implements _Node {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NodeCopyWith<_$_Node> get copyWith =>
-      __$$_NodeCopyWithImpl<_$_Node>(this, _$identity);
+  _$$NodeImplCopyWith<_$NodeImpl> get copyWith =>
+      __$$NodeImplCopyWithImpl<_$NodeImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -342,7 +345,7 @@ class _$_Node implements _Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)
+            List<Node> children)
         folder,
     required TResult Function(
             String id,
@@ -371,7 +374,7 @@ class _$_Node implements _Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult? Function(
             String id,
@@ -400,7 +403,7 @@ class _$_Node implements _Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult Function(
             String id,
@@ -455,7 +458,7 @@ class _$_Node implements _Node {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NodeToJson(
+    return _$$NodeImplToJson(
       this,
     );
   }
@@ -468,9 +471,9 @@ abstract class _Node implements Node {
       required final String title,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      required final NodeState state}) = _$_Node;
+      required final NodeState state}) = _$NodeImpl;
 
-  factory _Node.fromJson(Map<String, dynamic> json) = _$_Node.fromJson;
+  factory _Node.fromJson(Map<String, dynamic> json) = _$NodeImpl.fromJson;
 
   @override
   String get id;
@@ -486,13 +489,15 @@ abstract class _Node implements Node {
   NodeState get state;
   @override
   @JsonKey(ignore: true)
-  _$$_NodeCopyWith<_$_Node> get copyWith => throw _privateConstructorUsedError;
+  _$$NodeImplCopyWith<_$NodeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$FolderCopyWith<$Res> implements $NodeCopyWith<$Res> {
-  factory _$$FolderCopyWith(_$Folder value, $Res Function(_$Folder) then) =
-      __$$FolderCopyWithImpl<$Res>;
+abstract class _$$FolderImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
+  factory _$$FolderImplCopyWith(
+          _$FolderImpl value, $Res Function(_$FolderImpl) then) =
+      __$$FolderImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -503,13 +508,15 @@ abstract class _$$FolderCopyWith<$Res> implements $NodeCopyWith<$Res> {
       DateTime updatedAt,
       NodeState state,
       @JsonKey(includeToJson: false, includeFromJson: false)
-          List<Node> children});
+      List<Node> children});
 }
 
 /// @nodoc
-class __$$FolderCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$Folder>
-    implements _$$FolderCopyWith<$Res> {
-  __$$FolderCopyWithImpl(_$Folder _value, $Res Function(_$Folder) _then)
+class __$$FolderImplCopyWithImpl<$Res>
+    extends _$NodeCopyWithImpl<$Res, _$FolderImpl>
+    implements _$$FolderImplCopyWith<$Res> {
+  __$$FolderImplCopyWithImpl(
+      _$FolderImpl _value, $Res Function(_$FolderImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -523,7 +530,7 @@ class __$$FolderCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$Folder>
     Object? state = null,
     Object? children = null,
   }) {
-    return _then(_$Folder(
+    return _then(_$FolderImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -558,8 +565,8 @@ class __$$FolderCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$Folder>
 
 /// @nodoc
 @JsonSerializable()
-class _$Folder implements Folder {
-  _$Folder(
+class _$FolderImpl implements Folder {
+  _$FolderImpl(
       {required this.id,
       this.parent,
       this.title = "",
@@ -567,13 +574,13 @@ class _$Folder implements Folder {
       required this.updatedAt,
       required this.state,
       @JsonKey(includeToJson: false, includeFromJson: false)
-          final List<Node> children = const [],
+      final List<Node> children = const [],
       final String? $type})
       : _children = children,
         $type = $type ?? 'folder';
 
-  factory _$Folder.fromJson(Map<String, dynamic> json) =>
-      _$$FolderFromJson(json);
+  factory _$FolderImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FolderImplFromJson(json);
 
   @override
   final String id;
@@ -606,10 +613,10 @@ class _$Folder implements Folder {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Folder &&
+            other is _$FolderImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.title, title) || other.title == title) &&
@@ -629,8 +636,8 @@ class _$Folder implements Folder {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FolderCopyWith<_$Folder> get copyWith =>
-      __$$FolderCopyWithImpl<_$Folder>(this, _$identity);
+  _$$FolderImplCopyWith<_$FolderImpl> get copyWith =>
+      __$$FolderImplCopyWithImpl<_$FolderImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -646,7 +653,7 @@ class _$Folder implements Folder {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)
+            List<Node> children)
         folder,
     required TResult Function(
             String id,
@@ -675,7 +682,7 @@ class _$Folder implements Folder {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult? Function(
             String id,
@@ -705,7 +712,7 @@ class _$Folder implements Folder {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult Function(
             String id,
@@ -760,7 +767,7 @@ class _$Folder implements Folder {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FolderToJson(
+    return _$$FolderImplToJson(
       this,
     );
   }
@@ -775,9 +782,9 @@ abstract class Folder implements Node {
       required final DateTime updatedAt,
       required final NodeState state,
       @JsonKey(includeToJson: false, includeFromJson: false)
-          final List<Node> children}) = _$Folder;
+      final List<Node> children}) = _$FolderImpl;
 
-  factory Folder.fromJson(Map<String, dynamic> json) = _$Folder.fromJson;
+  factory Folder.fromJson(Map<String, dynamic> json) = _$FolderImpl.fromJson;
 
   @override
   String get id;
@@ -795,14 +802,15 @@ abstract class Folder implements Node {
   List<Node> get children;
   @override
   @JsonKey(ignore: true)
-  _$$FolderCopyWith<_$Folder> get copyWith =>
+  _$$FolderImplCopyWith<_$FolderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$NoteCopyWith<$Res> implements $NodeCopyWith<$Res> {
-  factory _$$NoteCopyWith(_$Note value, $Res Function(_$Note) then) =
-      __$$NoteCopyWithImpl<$Res>;
+abstract class _$$NoteImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
+  factory _$$NoteImplCopyWith(
+          _$NoteImpl value, $Res Function(_$NoteImpl) then) =
+      __$$NoteImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -816,9 +824,10 @@ abstract class _$$NoteCopyWith<$Res> implements $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$NoteCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$Note>
-    implements _$$NoteCopyWith<$Res> {
-  __$$NoteCopyWithImpl(_$Note _value, $Res Function(_$Note) _then)
+class __$$NoteImplCopyWithImpl<$Res>
+    extends _$NodeCopyWithImpl<$Res, _$NoteImpl>
+    implements _$$NoteImplCopyWith<$Res> {
+  __$$NoteImplCopyWithImpl(_$NoteImpl _value, $Res Function(_$NoteImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -832,7 +841,7 @@ class __$$NoteCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$Note>
     Object? state = null,
     Object? content = null,
   }) {
-    return _then(_$Note(
+    return _then(_$NoteImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -867,8 +876,8 @@ class __$$NoteCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res, _$Note>
 
 /// @nodoc
 @JsonSerializable()
-class _$Note implements Note {
-  _$Note(
+class _$NoteImpl implements Note {
+  _$NoteImpl(
       {required this.id,
       this.parent,
       this.title = "",
@@ -879,7 +888,8 @@ class _$Note implements Note {
       final String? $type})
       : $type = $type ?? 'note';
 
-  factory _$Note.fromJson(Map<String, dynamic> json) => _$$NoteFromJson(json);
+  factory _$NoteImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NoteImplFromJson(json);
 
   @override
   final String id;
@@ -907,10 +917,10 @@ class _$Note implements Note {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Note &&
+            other is _$NoteImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.title, title) || other.title == title) &&
@@ -930,8 +940,8 @@ class _$Note implements Note {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$NoteCopyWith<_$Note> get copyWith =>
-      __$$NoteCopyWithImpl<_$Note>(this, _$identity);
+  _$$NoteImplCopyWith<_$NoteImpl> get copyWith =>
+      __$$NoteImplCopyWithImpl<_$NoteImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -947,7 +957,7 @@ class _$Note implements Note {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)
+            List<Node> children)
         folder,
     required TResult Function(
             String id,
@@ -976,7 +986,7 @@ class _$Note implements Note {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult? Function(
             String id,
@@ -1005,7 +1015,7 @@ class _$Note implements Note {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-                List<Node> children)?
+            List<Node> children)?
         folder,
     TResult Function(
             String id,
@@ -1060,7 +1070,7 @@ class _$Note implements Note {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NoteToJson(
+    return _$$NoteImplToJson(
       this,
     );
   }
@@ -1074,9 +1084,9 @@ abstract class Note implements Node {
       required final DateTime createdAt,
       required final DateTime updatedAt,
       required final NodeState state,
-      final String content}) = _$Note;
+      final String content}) = _$NoteImpl;
 
-  factory Note.fromJson(Map<String, dynamic> json) = _$Note.fromJson;
+  factory Note.fromJson(Map<String, dynamic> json) = _$NoteImpl.fromJson;
 
   @override
   String get id;
@@ -1093,5 +1103,6 @@ abstract class Note implements Node {
   String get content;
   @override
   @JsonKey(ignore: true)
-  _$$NoteCopyWith<_$Note> get copyWith => throw _privateConstructorUsedError;
+  _$$NoteImplCopyWith<_$NoteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

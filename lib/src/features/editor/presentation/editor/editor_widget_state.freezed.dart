@@ -12,7 +12,7 @@ part of 'editor_widget_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$EditorWidgetState {
@@ -57,22 +57,22 @@ class _$EditorWidgetStateCopyWithImpl<$Res, $Val extends EditorWidgetState>
 }
 
 /// @nodoc
-abstract class _$$_EditorWidgetStateCopyWith<$Res>
+abstract class _$$EditorWidgetStateImplCopyWith<$Res>
     implements $EditorWidgetStateCopyWith<$Res> {
-  factory _$$_EditorWidgetStateCopyWith(_$_EditorWidgetState value,
-          $Res Function(_$_EditorWidgetState) then) =
-      __$$_EditorWidgetStateCopyWithImpl<$Res>;
+  factory _$$EditorWidgetStateImplCopyWith(_$EditorWidgetStateImpl value,
+          $Res Function(_$EditorWidgetStateImpl) then) =
+      __$$EditorWidgetStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Note? note});
 }
 
 /// @nodoc
-class __$$_EditorWidgetStateCopyWithImpl<$Res>
-    extends _$EditorWidgetStateCopyWithImpl<$Res, _$_EditorWidgetState>
-    implements _$$_EditorWidgetStateCopyWith<$Res> {
-  __$$_EditorWidgetStateCopyWithImpl(
-      _$_EditorWidgetState _value, $Res Function(_$_EditorWidgetState) _then)
+class __$$EditorWidgetStateImplCopyWithImpl<$Res>
+    extends _$EditorWidgetStateCopyWithImpl<$Res, _$EditorWidgetStateImpl>
+    implements _$$EditorWidgetStateImplCopyWith<$Res> {
+  __$$EditorWidgetStateImplCopyWithImpl(_$EditorWidgetStateImpl _value,
+      $Res Function(_$EditorWidgetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_EditorWidgetStateCopyWithImpl<$Res>
   $Res call({
     Object? note = freezed,
   }) {
-    return _then(_$_EditorWidgetState(
+    return _then(_$EditorWidgetStateImpl(
       note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ class __$$_EditorWidgetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EditorWidgetState implements _EditorWidgetState {
-  _$_EditorWidgetState({this.note});
+class _$EditorWidgetStateImpl implements _EditorWidgetState {
+  _$EditorWidgetStateImpl({this.note});
 
   @override
   final Note? note;
@@ -103,10 +103,10 @@ class _$_EditorWidgetState implements _EditorWidgetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EditorWidgetState &&
+            other is _$EditorWidgetStateImpl &&
             const DeepCollectionEquality().equals(other.note, note));
   }
 
@@ -117,18 +117,18 @@ class _$_EditorWidgetState implements _EditorWidgetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EditorWidgetStateCopyWith<_$_EditorWidgetState> get copyWith =>
-      __$$_EditorWidgetStateCopyWithImpl<_$_EditorWidgetState>(
+  _$$EditorWidgetStateImplCopyWith<_$EditorWidgetStateImpl> get copyWith =>
+      __$$EditorWidgetStateImplCopyWithImpl<_$EditorWidgetStateImpl>(
           this, _$identity);
 }
 
 abstract class _EditorWidgetState implements EditorWidgetState {
-  factory _EditorWidgetState({final Note? note}) = _$_EditorWidgetState;
+  factory _EditorWidgetState({final Note? note}) = _$EditorWidgetStateImpl;
 
   @override
   Note? get note;
   @override
   @JsonKey(ignore: true)
-  _$$_EditorWidgetStateCopyWith<_$_EditorWidgetState> get copyWith =>
+  _$$EditorWidgetStateImplCopyWith<_$EditorWidgetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

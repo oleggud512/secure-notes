@@ -12,7 +12,7 @@ part of 'node_widget_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$NodeWidgetState {
@@ -83,11 +83,11 @@ class _$NodeWidgetStateCopyWithImpl<$Res, $Val extends NodeWidgetState>
 }
 
 /// @nodoc
-abstract class _$$_NodeWidgetStateCopyWith<$Res>
+abstract class _$$NodeWidgetStateImplCopyWith<$Res>
     implements $NodeWidgetStateCopyWith<$Res> {
-  factory _$$_NodeWidgetStateCopyWith(
-          _$_NodeWidgetState value, $Res Function(_$_NodeWidgetState) then) =
-      __$$_NodeWidgetStateCopyWithImpl<$Res>;
+  factory _$$NodeWidgetStateImplCopyWith(_$NodeWidgetStateImpl value,
+          $Res Function(_$NodeWidgetStateImpl) then) =
+      __$$NodeWidgetStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Node? node, bool isChildrenShown, List<Node> nodes});
@@ -97,11 +97,11 @@ abstract class _$$_NodeWidgetStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NodeWidgetStateCopyWithImpl<$Res>
-    extends _$NodeWidgetStateCopyWithImpl<$Res, _$_NodeWidgetState>
-    implements _$$_NodeWidgetStateCopyWith<$Res> {
-  __$$_NodeWidgetStateCopyWithImpl(
-      _$_NodeWidgetState _value, $Res Function(_$_NodeWidgetState) _then)
+class __$$NodeWidgetStateImplCopyWithImpl<$Res>
+    extends _$NodeWidgetStateCopyWithImpl<$Res, _$NodeWidgetStateImpl>
+    implements _$$NodeWidgetStateImplCopyWith<$Res> {
+  __$$NodeWidgetStateImplCopyWithImpl(
+      _$NodeWidgetStateImpl _value, $Res Function(_$NodeWidgetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -111,7 +111,7 @@ class __$$_NodeWidgetStateCopyWithImpl<$Res>
     Object? isChildrenShown = null,
     Object? nodes = null,
   }) {
-    return _then(_$_NodeWidgetState(
+    return _then(_$NodeWidgetStateImpl(
       node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
@@ -130,8 +130,8 @@ class __$$_NodeWidgetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NodeWidgetState implements _NodeWidgetState {
-  _$_NodeWidgetState(
+class _$NodeWidgetStateImpl implements _NodeWidgetState {
+  _$NodeWidgetStateImpl(
       {this.node,
       this.isChildrenShown = false,
       final List<Node> nodes = const []})
@@ -157,10 +157,10 @@ class _$_NodeWidgetState implements _NodeWidgetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NodeWidgetState &&
+            other is _$NodeWidgetStateImpl &&
             (identical(other.node, node) || other.node == node) &&
             (identical(other.isChildrenShown, isChildrenShown) ||
                 other.isChildrenShown == isChildrenShown) &&
@@ -174,15 +174,16 @@ class _$_NodeWidgetState implements _NodeWidgetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NodeWidgetStateCopyWith<_$_NodeWidgetState> get copyWith =>
-      __$$_NodeWidgetStateCopyWithImpl<_$_NodeWidgetState>(this, _$identity);
+  _$$NodeWidgetStateImplCopyWith<_$NodeWidgetStateImpl> get copyWith =>
+      __$$NodeWidgetStateImplCopyWithImpl<_$NodeWidgetStateImpl>(
+          this, _$identity);
 }
 
 abstract class _NodeWidgetState implements NodeWidgetState {
   factory _NodeWidgetState(
       {final Node? node,
       final bool isChildrenShown,
-      final List<Node> nodes}) = _$_NodeWidgetState;
+      final List<Node> nodes}) = _$NodeWidgetStateImpl;
 
   @override
   Node? get node;
@@ -192,6 +193,6 @@ abstract class _NodeWidgetState implements NodeWidgetState {
   List<Node> get nodes;
   @override
   @JsonKey(ignore: true)
-  _$$_NodeWidgetStateCopyWith<_$_NodeWidgetState> get copyWith =>
+  _$$NodeWidgetStateImplCopyWith<_$NodeWidgetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

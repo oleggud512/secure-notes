@@ -2,7 +2,7 @@ import 'package:editor_riverpod/src/features/editor/application/use_cases/encryp
 import 'package:editor_riverpod/src/features/editor/application/use_cases/encryption/encrypt_node_use_case.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node_state.dart';
-import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/auth_service_impl.dart';
+import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/auth_service_provider.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

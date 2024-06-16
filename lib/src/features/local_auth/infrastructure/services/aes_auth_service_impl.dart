@@ -1,26 +1,17 @@
 import 'package:editor_riverpod/src/core/application/services/hashing_service.dart';
 import 'package:editor_riverpod/src/core/common/constants/keys.dart';
-import 'package:editor_riverpod/src/core/external/data_sources/key_value_storage/secure_storage_provider.dart';
 import 'package:editor_riverpod/src/core/infrastructure/data_sources/key_value_storage/key_value_storage_data_source.dart';
-import 'package:editor_riverpod/src/core/infrastructure/services/hashing_service_impl.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/external/data_sources/key_value_storage/runtime_storage_provider.dart';
 import '../../../encryption/application/services/aes_encryption/aes_encryption_service.dart';
 import '../../../encryption/application/services/rsa_encryption/key_pem_converter.dart';
 import '../../../encryption/application/services/rsa_encryption/rsa_encryption_service.dart';
-import '../../../encryption/infrastructure/services/aes_encryption/aes_encryption_service_impl.dart';
-import '../../../encryption/infrastructure/services/rsa_encryption/key_pem_converter_impl.dart';
-import '../../../encryption/infrastructure/services/rsa_encryption/rsa_encryption_service_impl.dart';
 import '../../application/errors/exceptions.dart';
 import '../../application/services/auth_service.dart';
 
-part 'auth_service_impl.g.dart';
-
-class AuthServiceImpl extends ChangeNotifier implements AuthService {
+class AESAuthServiceImpl extends ChangeNotifier implements AuthService {
   final KeyValueStorageDataSource runtimeStorage;
   final KeyValueStorageDataSource secureStorage;
   final RSAEncryptionService encryptionService;
@@ -29,7 +20,7 @@ class AuthServiceImpl extends ChangeNotifier implements AuthService {
   final KeyPemConverter pemConverter;
   final logger = Logger();
 
-  AuthServiceImpl({
+  AESAuthServiceImpl({
     required this.runtimeStorage, 
     required this.secureStorage, 
     required this.encryptionService, 
@@ -40,34 +31,26 @@ class AuthServiceImpl extends ChangeNotifier implements AuthService {
 
   @override
   Future<Either<LocalAuthException, void>> signInLocally(String password) async {
-    
+    // read the hashed password from the storage
     var hashedPassword = await secureStorage.read(StorageKeys.hashedPassword);
+    // generate an AES key for the passphrase
     final passwordAesKey = await aesServ.generateKey(password);
 
+    // no password stored (first run)
     if (hashedPassword == null) {
-      final keyPair = encryptionService.generateKeyPair();
-
-      await secureStorage.write(
-        StorageKeys.publicKey, 
-        pemConverter.encodePublicKey(keyPair.publicKey)
-      );
-      await secureStorage.write(
-        StorageKeys.encryptedPrivateKey, 
-        aesServ.encrypt(pemConverter.encodePrivateKey(keyPair.privateKey), passwordAesKey)
-      );
-
+      await secureStorage.write(StorageKeys.aesKey, passwordAesKey);
+      // storing hashed password to secured storage
       hashedPassword = hashingService.hash(password);
       await secureStorage.write(StorageKeys.hashedPassword, hashedPassword);
     }
 
+    // here, the password is definitely exists.
+    // compare stored password with an entered one
     final same = hashingService.compare(password, hashedPassword);
     if (!same) return Left(IncorrectPasswordException());
 
     try {
-      final encryptedPrivateKeyPem = await secureStorage.read(StorageKeys.encryptedPrivateKey);
-      final privateKeyPem = aesServ.decrypt(encryptedPrivateKeyPem!, passwordAesKey);
-
-      await runtimeStorage.write(StorageKeys.decryptedPrivateKey, privateKeyPem);
+      await runtimeStorage.write(StorageKeys.aesKey, passwordAesKey);
 
       notifyListeners();
       print('notifyListeners()');
@@ -77,16 +60,16 @@ class AuthServiceImpl extends ChangeNotifier implements AuthService {
       return Left(IncorrectPasswordException());
     }
   }
-  
+
   @override
   Future<bool> get isSignedInLocally async {
-    final res = await runtimeStorage.read(StorageKeys.decryptedPrivateKey);
+    final res = await runtimeStorage.read(StorageKeys.aesKey);
     return res != null;
   }
   
   @override
   Future<void> localSignOut() async {
-    await runtimeStorage.delete(StorageKeys.decryptedPrivateKey);
+    await runtimeStorage.delete(StorageKeys.aesKey);
     notifyListeners();
   }
   
@@ -98,37 +81,21 @@ class AuthServiceImpl extends ChangeNotifier implements AuthService {
     final oldHash = await secureStorage.read(StorageKeys.hashedPassword);
     final isSame = hashingService.compare(oldPassword, oldHash!);
 
+    // check if existing password is a correct one
     if (!isSame) return Left(IncorrectPasswordException());
 
+    // hash new password
     final newHash = hashingService.hash(newPassword);
 
+    // store new hash
     await secureStorage.write(StorageKeys.hashedPassword, newHash);
 
-    final newPasswordKey = await aesServ.generateKey(newPassword);
-    final privateKeyPem = await runtimeStorage.read(StorageKeys.decryptedPrivateKey);
-    final encryptedPrivateKey = aesServ.encrypt(privateKeyPem!, newPasswordKey);
+    // derive new aes key
+    final newAesKey = await aesServ.generateKey(newPassword);
 
-    await secureStorage.write(StorageKeys.encryptedPrivateKey, encryptedPrivateKey);
+    // save new aes key
+    await secureStorage.write(StorageKeys.aesKey, newAesKey);
 
     return const Right(null);
   }
-
-  
-}
-
-@Riverpod(keepAlive: true)
-AuthService authService(AuthServiceRef ref) {
-  return AuthServiceImpl(
-    runtimeStorage: ref.watch(runtimeStorageProvider),
-    secureStorage: ref.watch(secureStorageProvider),
-    encryptionService: RSAEncryptionServiceImpl.instance,
-    hashingService: HashingServiceImpl.instance,
-    aesServ: AESEncryptionServiceImpl.instance,
-    pemConverter: KeyPemConverterImpl.instance,
-  );
-}
-
-@riverpod
-Listenable reevaluateLisenable(ReevaluateLisenableRef ref) {
-  return ref.watch(authServiceProvider) as AuthServiceImpl;
 }

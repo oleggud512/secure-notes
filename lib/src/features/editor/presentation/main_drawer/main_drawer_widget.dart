@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/presentation/constants.dart';
-import '../../../local_auth/infrastructure/services/auth_service_impl.dart';
+import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/auth_service_provider.dart';
 import '../node_widget/node_widget_controller.dart';
 import '../node_widget/node_widget_state.dart';
 

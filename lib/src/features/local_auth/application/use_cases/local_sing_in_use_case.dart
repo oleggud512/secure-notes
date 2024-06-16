@@ -3,7 +3,7 @@ import 'package:editor_riverpod/src/features/local_auth/application/services/aut
 import 'package:either_dart/either.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../features/local_auth/infrastructure/services/auth_service_impl.dart';
+import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/auth_service_provider.dart';
 import '../errors/exceptions.dart';
 
 part 'local_sing_in_use_case.g.dart';

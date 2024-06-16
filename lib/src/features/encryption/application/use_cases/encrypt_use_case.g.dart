@@ -6,7 +6,7 @@ part of 'encrypt_use_case.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$encryptUseCaseHash() => r'2cec7a7e773e350d1feb6f562aaa4a3c2dda64d7';
+String _$encryptUseCaseHash() => r'd24401e37ce6fe07b977a222aa2f91b000af90ed';
 
 /// See also [encryptUseCase].
 @ProviderFor(encryptUseCase)
@@ -21,4 +21,5 @@ final encryptUseCaseProvider = AutoDisposeProvider<EncryptUseCase>.internal(
 );
 
 typedef EncryptUseCaseRef = AutoDisposeProviderRef<EncryptUseCase>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

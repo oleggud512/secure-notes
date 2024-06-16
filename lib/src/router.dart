@@ -6,7 +6,7 @@ import 'package:auto_route/auto_route.dart';
 import 'features/app_settings/presentation/settings/settings_page.dart';
 import 'features/local_auth/application/services/auth_service.dart';
 import 'features/editor/presentation/main_page.dart';
-import 'features/local_auth/infrastructure/services/auth_service_impl.dart';
+import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/auth_service_provider.dart';
 import 'features/local_auth/presentation/local_auth_page.dart';
 
 part 'router.gr.dart';
