@@ -5,6 +5,7 @@ import 'package:editor_riverpod/src/features/editor/presentation/editor/editor_w
 import 'package:editor_riverpod/src/features/editor/presentation/editor/editor_widget_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart';
 
 class EditorWidget extends ConsumerStatefulWidget {
   const EditorWidget({super.key});
@@ -33,18 +34,23 @@ class _EditorWidgetState extends ConsumerState<EditorWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = this.state;
     return state.when(
-      data: buildWidget,
+      data: (state) => buildWidget(context, state),
       error: (e, st) => Center(child: Text('something went wrong'.hardcoded)),
       loading: () => state.value == null 
         ? Center(child: CircularProgressIndicator())
-        : buildWidget(state.value!)
+        : buildWidget(context, state.value!)
     );
   }
 
-  Widget buildWidget(EditorWidgetState state) {
+  Widget buildWidget(BuildContext context, EditorWidgetState state) {
     if (state.note == null) return Center(
       child: Text('Open a note'.hardcoded, 
         style: Theme.of(context).textTheme.headlineLarge!.copyWith(
@@ -54,39 +60,67 @@ class _EditorWidgetState extends ConsumerState<EditorWidget> {
     );
     return Form(
       key: formKey,
-      child: SingleChildScrollView(
-        key: Key(state.note!.id),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextFormField(
-              initialValue: state.note!.title,
-              onChanged: onTitleChanged,
-              validator: (s) {
-                if (s == null || s.isEmpty) return 'ENTER A TITLE'.hardcoded;
-                return null;
-              },
-              style: Theme.of(context).textTheme.headlineMedium,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Untitled'.hardcoded,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              key: Key(state.note!.id),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  buildTitle(context, state),
+                  buildContent(state),
+                  buildGap(context)
+                ]
               ),
             ),
-            TextFormField(
-              initialValue: state.note!.content,
-              onChanged: onContentChanged,
-              maxLines: null,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Write something...'.hardcoded,
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 2
-            )
-          ]
-        ),
+          ),
+          buildCounter(context, state)
+        ],
       ),
     );
   }
+
+  Widget buildTitle(BuildContext context, EditorWidgetState state) {
+    return TextFormField(
+      initialValue: state.note!.title,
+      onChanged: onTitleChanged,
+      validator: (s) {
+        if (s == null || s.isEmpty) return 'ENTER A TITLE'.hardcoded;
+        return null;
+      },
+      style: Theme.of(context).textTheme.headlineMedium,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: 'Untitled'.hardcoded,
+      ),
+    );
+  }
+
+  Widget buildContent(EditorWidgetState state) {
+    return TextFormField(
+      initialValue: state.note!.content,
+      onChanged: onContentChanged,
+      maxLines: null,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: 'Write something...'.hardcoded,
+      ),
+    );
+  }
+
+  Widget buildGap(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 2
+    );
+  }
+
+  Widget buildCounter(BuildContext context, EditorWidgetState state) {
+    return Text("${state.note!.content.length}",
+      textAlign: TextAlign.end,
+      style: Theme.of(context).textTheme.labelMedium
+    );
+  }
+
 }
