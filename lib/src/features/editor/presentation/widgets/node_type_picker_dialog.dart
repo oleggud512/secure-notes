@@ -1,32 +1,34 @@
+import 'dart:async';
+
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node_type.dart';
 import 'package:flutter/material.dart';
 
-class NodeTypePicker extends StatelessWidget {
-  const NodeTypePicker({super.key});
+class NodeTypePickerButton extends StatelessWidget {
+  const NodeTypePickerButton({
+    super.key,
+    required this.onTypeSelected
+  });
 
-  static Future<NodeType?> show(BuildContext context) async {
-    return await showDialog(
-      context: context, 
-      builder: (context) {
-        return NodeTypePicker();
-      }
-    );
-  }
+  final FutureOr<void> Function(NodeType type) onTypeSelected;
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      children: [
-        SimpleDialogOption(
-          child: Text('Folder'.hardcoded),
-          onPressed: () => Navigator.of(context).pop(NodeType.folder),
-        ),
-        SimpleDialogOption(
-          child: Text('Note'.hardcoded),
-          onPressed: () => Navigator.of(context).pop(NodeType.note),
-        ),
-      ],
+    return PopupMenuButton<NodeType>(
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            value: NodeType.folder,
+            child: Text("Folder".hardcoded),
+          ),
+          PopupMenuItem(
+            value: NodeType.note,
+            child: Text("Note".hardcoded)
+          )
+        ];
+      },
+      onSelected: onTypeSelected,
+      child: Icon(Icons.add),
     );
   }
 }

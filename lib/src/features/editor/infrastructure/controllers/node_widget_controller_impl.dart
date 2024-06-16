@@ -38,17 +38,11 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
     if (p is Folder && n is Note) return -1;
     if (p is Note && n is Folder) return 1;
     return p.title.compareTo(n.title);
-    // if (p is Folder == n is Folder) {
-    //   return p.title.compareTo(n.title); // Sort alphabetically
-    // } else {
-    //   return p is Folder ? -1 : 1; // Sort folders first
-    // }
   };
 
   FutureOr<NodeWidgetState> build(String? nodeId) async {
     final link = ref.keepAlive();
     final timer = Timer(const Duration(minutes: 5), () {
-      print('link.close()');
       link.close(); 
     });
     ref.onDispose(() {
@@ -63,7 +57,9 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
 
     final children = await _getSubfoldersUseCase.call(nodeId);
     return NodeWidgetState(
-      node: nodeId == null ? null : (await _getNodeUseCase.call(nodeId)).right,
+      node: nodeId == null 
+        ? null
+        : (await _getNodeUseCase.call(nodeId)).right,
       nodes: children.right..sort(_comparator)
     );
   }
@@ -89,7 +85,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
     final res = await _deleteNodeUseCase.call(id);
     if (res.isRight) {
       state = AsyncData(state.value!.copyWith(
-        nodes: state.value!.nodes.copyWithoutWhere((n) => n.id == id)
+        nodes: state.value!.nodes.copyWithoutWhere((n) => n.id == id)..sort(_comparator)
       ));
     }
     return res;
@@ -140,30 +136,27 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
     return children.mapAsync((children) async {
       // print('${state.value!.node?.id} (${state.value!.node?.title}) - ${state.value!.nodes.length}');
       await awaiter;
-      state = AsyncData(state.value!.copyWith(node: node?.right, nodes: children));
+      state = AsyncData(state.value!.copyWith(node: node?.right, nodes: children..sort(_comparator)));
     });
   }
   
   @override
   Future<Either<AppException, void>> moveHere((String who, String? from) toMove) async {
-    // TODO: Should I just add the note.addNote(title, content, createdAt) method and 
-    // delete and add a note to simulate the move?
+    // get a node
     final node = await _getNodeUseCase.call(toMove.$1);
 
     late Either<AppException, Node> updated;
+    // update node parent and retrieve either Folder or Note
     if (node.right is Note) {
       updated = await _updateNoteUseCase.call(node.right.copyWith(parent: nodeId) as Note);
     } else if (node.right is Folder) {
       updated = await _updateFolderUseCase.call(node.right.copyWith(parent: nodeId) as Folder);
     }
-    // updated.map((right) => print('note updated successfully. new parent = ${right.parent}'));
-    // var resolved = false;
-    // final future = Future.doWhile(() => resolved);
 
+    // nodes that have been changed
     await ref.watch(nodeRefresherProvider(toMove.$1)).refresh();
     await ref.watch(nodeRefresherProvider(toMove.$2)).refresh();
     await refresh();
-      // .then((value) => resolved = true);
 
     return updated.map((right) => null);
   }

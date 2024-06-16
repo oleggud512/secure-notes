@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:editor_riverpod/src/core/common/hardcoded.dart';
+import 'package:editor_riverpod/src/features/editor/domain/entities/node/node_type.dart';
 import 'package:editor_riverpod/src/features/editor/infrastructure/controllers/node_widget_controller_impl.dart';
 import 'package:editor_riverpod/src/features/editor/presentation/node_widget/node_widget.dart';
 import 'package:editor_riverpod/src/features/editor/presentation/widgets/node_type_picker_dialog.dart';
@@ -6,10 +8,8 @@ import 'package:editor_riverpod/src/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/infrastructure/data_sources/database/database_provider.dart';
 import '../../../../core/presentation/constants.dart';
 import '../../../local_auth/infrastructure/services/auth_service_impl.dart';
-import '../../domain/entities/node/node.dart';
 import '../node_widget/node_widget_controller.dart';
 import '../node_widget/node_widget_state.dart';
 
@@ -22,9 +22,7 @@ class _MainDrawerState extends ConsumerState<MainDrawer> {
   NodeWidgetController get nodeCont => ref.watch(nodeWidgetControllerImplProvider(null).notifier);
   AsyncValue<NodeWidgetState> get state => ref.watch(nodeWidgetControllerImplProvider(null));
   
-  void onAddNode() async {
-    final type = await NodeTypePicker.show(context);
-    if (type == null) return;
+  void onAddNode(NodeType type) async {
     await nodeCont.addChild(type);
   }
 
@@ -47,22 +45,27 @@ class _MainDrawerState extends ConsumerState<MainDrawer> {
             onPressed: () async {
               ref.watch(authServiceProvider).localSignOut();
             }, 
-            child: Text('Exit'),
+            child: Text('Exit'.hardcoded),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 12, top: p4),
             child: Row(
               children: [
-                IconButton(onPressed: onShowSettings, icon: Icon(Icons.settings)),
+                IconButton(
+                  onPressed: onShowSettings, 
+                  icon: Icon(Icons.settings)
+                ),
                 Spacer(),
-                IconButton(onPressed: onAddNode, icon: Icon(Icons.add))
+                NodeTypePickerButton(
+                  onTypeSelected: onAddNode
+                )
               ],
             ),
           ),
           ...state.nodes.map((n) => NodeWidget(node: n)),
           DragTarget<(String who, String from)>(
-            onAccept: (data) {
-              nodeCont.moveHere(data);
+            onAcceptWithDetails: (data) {
+              nodeCont.moveHere(data.data);
             },
             builder: (context, candidateData, rejectedData) {
               return Container(
@@ -78,7 +81,7 @@ class _MainDrawerState extends ConsumerState<MainDrawer> {
       error: (e, st) {
         print(e);
         print(st);
-        return Text('er');
+        return Text('er'.hardcoded);
       },
       loading: () => shrink
     );

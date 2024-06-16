@@ -52,7 +52,6 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
       cont.selectThisNode();
       if (context.isMobile) context.popRoute();
     } else {
-      print('supposed to toggle children shown');
       toggleChildrenShown();
     }
   }
@@ -60,7 +59,7 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
   @override
   Widget build(BuildContext context) {
     final state = this.state;
-    print('state - ${state.value?.node?.title} ${state.value?.node?.id} -- ${state.value?.nodes.length}');
+    // print('state - ${state.value?.node?.title} ${state.value?.node?.id} -- ${state.value?.nodes.length}');
     return state.when(
       data: (state) {
         return buildWidget(state: state);
@@ -152,10 +151,10 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
         ],
       )
     );
-    if (state.node is! Folder) return draggable;
+    if (state.node is! Folder) return draggable; 
     return DragTarget<(String who, String? from)>(
       onAccept: (node) async {
-        print('data accepted - invider\'s parent=${node.$2} me = ${state.node?.id}');
+        // print('data accepted - invider\'s parent=${node.$2} me = ${state.node?.id}');
         if (node.$2 == state.node?.id) return;
         await cont.moveHere(node);
       },

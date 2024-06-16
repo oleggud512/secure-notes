@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 
 class DatabaseService {
   DatabaseService._();
-  
+
   static DatabaseService? _instance;
 
   static DatabaseService get instance {

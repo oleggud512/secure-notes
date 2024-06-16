@@ -15,7 +15,7 @@ class AESEncryptionServiceImpl implements AESEncryptionService {
     return _instance!;
   }
 
-  final _keyLen = 32;
+  // final _keyLen = 32;
   final _ivLen = 16;
 
   @override

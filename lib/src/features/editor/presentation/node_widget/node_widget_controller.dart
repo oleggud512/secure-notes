@@ -13,4 +13,7 @@ abstract interface class NodeWidgetController implements ChildDeleter, NodeRefre
   Future<Either<AppException, void>> moveHere((String who, String? from) toMove);
   void toggleChildrenShown([bool? isChildrenShown]);
   void selectThisNode();
+
+  @override Future<Either<AppException, void>> deleteChild(String id);
+  @override Future<Either<AppException, void>> refresh([Future? awaiter]);
 }
