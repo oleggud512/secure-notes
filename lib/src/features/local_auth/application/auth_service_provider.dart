@@ -5,11 +5,11 @@ import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/external/data_sources/key_value_storage/runtime_storage_provider.dart';
-import '../../../encryption/infrastructure/services/aes_encryption/aes_encryption_service_impl.dart';
-import '../../../encryption/infrastructure/services/rsa_encryption/key_pem_converter_impl.dart';
-import '../../../encryption/infrastructure/services/rsa_encryption/rsa_encryption_service_impl.dart';
-import '../../application/services/auth_service.dart';
+import '../../../core/external/data_sources/key_value_storage/runtime_storage_provider.dart';
+import '../../encryption/infrastructure/services/aes_encryption/aes_encryption_service_impl.dart';
+import '../../encryption/infrastructure/services/rsa_encryption/key_pem_converter_impl.dart';
+import '../../encryption/infrastructure/services/rsa_encryption/rsa_encryption_service_impl.dart';
+import 'services/auth_service.dart';
 
 part 'auth_service_provider.g.dart';
 

@@ -53,7 +53,6 @@ class AESAuthServiceImpl extends ChangeNotifier implements AuthService {
       await runtimeStorage.write(StorageKeys.aesKey, passwordAesKey);
 
       notifyListeners();
-      print('notifyListeners()');
       return const Right(null);
     } catch (e) {
       logger.e(e);
