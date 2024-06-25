@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
+import 'package:editor_riverpod/src/core/presentation/dialog_widget.dart';
 import 'package:editor_riverpod/src/core/presentation/password_text_field.dart';
 import 'package:editor_riverpod/src/features/app_settings/presentation/change_password/change_password_dialog_controller.dart';
 import 'package:editor_riverpod/src/features/app_settings/presentation/change_password/change_password_dialog_state.dart';
@@ -8,17 +9,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/presentation/constants.dart';
 
-class ChangePasswordDialog extends ConsumerStatefulWidget {
-  const ChangePasswordDialog({super.key});
-
-  static show(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return ChangePasswordDialog();
-      }
-    );
-  }
+class ChangePasswordDialog extends ConsumerStatefulWidget with DialogWidget<void> {
+  const ChangePasswordDialog({
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChangePasswordDialogState();
@@ -45,7 +39,7 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
       isPasswordCorrect = false;
     }, (r) {
       isPasswordCorrect = true;
-      context.popRoute();
+      context.maybePop();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Password changed successfully'),
         behavior: SnackBarBehavior.floating,

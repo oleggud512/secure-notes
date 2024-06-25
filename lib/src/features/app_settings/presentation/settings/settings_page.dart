@@ -12,7 +12,7 @@ class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
   onChangePassword(BuildContext context, WidgetRef ref) async {
-    await ChangePasswordDialog.show(context);
+    await ChangePasswordDialog().show(context);
   }
 
   onThemeSelected(WidgetRef ref, ThemeMode mode) async {
