@@ -2,8 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class AppException extends Equatable implements Exception { 
   final String? message;
+  final StackTrace? stackTrace;
 
-  const AppException([this.message]);
+  const AppException([this.message, this.stackTrace]);
 
   @override
   String toString() {
@@ -14,7 +15,10 @@ class AppException extends Equatable implements Exception {
   List<Object?> get props => [];
 }
 
-class NotFoundException extends AppException { }
+class NotFoundException extends AppException { 
+  // TODO: do something with this...
+  NotFoundException([super.message = "not found"]);
+}
 
 class ConnectivityException extends AppException { }
 

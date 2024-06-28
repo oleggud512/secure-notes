@@ -21,6 +21,7 @@ class GetNodeUseCase {
     final decrypted = encrypted.thenAsync((r) {
       return decryptNodeUseCase.call<T>(r);
     });
+    
     return decrypted;
   }
 }

@@ -20,22 +20,66 @@ class DecryptNodeUseCaseImpl implements DecryptNodeUseCase {
   @override
   Future<Either<AppException, T>> call<T extends Node>(Node node) async {
     if (node is Note) { 
-      return Right(await decryptNote(node) as T);
+      return await decryptNote(node) as Either<AppException, T>;
     } else if (node is Folder) {
-      return Right(await decryptFolder(node) as T);
+      return await decryptFolder(node) as Either<AppException, T>;
     }
     return Left(EncryptionException());
   }
 
-  Future<Folder> decryptFolder(Folder folder) async {
+  Future<Either<AppException, Folder>> decryptFolder(Folder folder) async {
     final title = await decryptUseCase(folder.title);
-    return folder.copyWith(title: title);
+
+    return title.fold(
+      (left) {
+        return Right(folder.copyWith(
+          isDecryptionError: true,
+          title: "(f) decr err"
+        ));
+      },
+      (right) {
+        return Right(folder.copyWith(
+          title: right
+        ));
+      }
+    );
   }
 
-  Future<Note> decryptNote(Note note) async {
+  Future<Either<AppException, Note>> decryptNote(Note note) async {
     final title = await decryptUseCase(note.title);
     final content = await decryptUseCase(note.content);
-    return note.copyWith(title: title, content: content);
+
+    var resNote = note.copyWith();
+
+    title.fold(
+      (left) {
+        resNote = resNote.copyWith(
+          isDecryptionError: true,
+          title: "(nt) decr err"
+        );
+      },
+      (right) {
+        resNote = resNote.copyWith(
+          title: right
+        );
+      }
+    );
+
+    content.fold(
+      (left) {
+        resNote = resNote.copyWith(
+          isDecryptionError: true,
+          content: "(nc) decr err"
+        );
+      },
+      (right) {
+        resNote = resNote.copyWith(
+          content: right
+        );
+      }
+    );
+
+    return Right(resNote);
   }
 
 }

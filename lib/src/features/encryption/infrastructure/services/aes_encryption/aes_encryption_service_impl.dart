@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cryptography/cryptography.dart';
+import 'package:editor_riverpod/src/features/editor/application/exceptions.dart';
 import 'package:encrypt/encrypt.dart';
 
 import '../../../application/services/aes_encryption/aes_encryption_service.dart';
@@ -24,7 +25,11 @@ class AESEncryptionServiceImpl implements AESEncryptionService {
     final iv = IV(combinationBytes.sublist(0, _ivLen));
     final encrypted = Encrypted(combinationBytes.sublist(_ivLen));
     final encrypter = Encrypter(AES(Key.fromBase64(key)));
-    return encrypter.decrypt(encrypted, iv: iv);
+    try {
+      return encrypter.decrypt(encrypted, iv: iv);
+    } catch (e, st) {
+      throw DecryptionException(null, st);
+    }
   }
 
   @override

@@ -122,4 +122,10 @@ class RSAAuthServiceImpl extends ChangeNotifier implements AuthService {
 
     return const Right(null);
   }
+  
+  @override
+  Stream<Either<LocalAuthException, void>> watchPasswordChange() {
+    // TODO: implement watchPasswordChange
+    throw UnimplementedError();
+  }
 }

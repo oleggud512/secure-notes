@@ -50,7 +50,7 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
   void onTapNode() async {
     if (state.value!.node is Note) {
       cont.selectThisNode();
-      if (context.isMobile) context.popRoute();
+      if (context.isMobile) context.maybePop();
     } else {
       toggleChildrenShown();
     }

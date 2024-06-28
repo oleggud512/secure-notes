@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:editor_riverpod/src/core/application/errors/exceptions.dart';
 import 'package:editor_riverpod/src/core/common/list_ext.dart';
+import 'package:editor_riverpod/src/core/common/loggler.dart';
 import 'package:editor_riverpod/src/features/editor/application/providers/curret_note_provider.dart';
 import 'package:editor_riverpod/src/features/editor/application/providers/node_refresher_provider.dart';
 import 'package:editor_riverpod/src/features/editor/application/providers/parent_folder_provider.dart';
@@ -56,11 +57,39 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
     });
 
     final children = await _getSubfoldersUseCase.call(nodeId);
-    return NodeWidgetState(
-      node: nodeId == null 
-        ? null
-        : (await _getNodeUseCase.call(nodeId)).right,
-      nodes: children.right..sort(_comparator)
+
+    if (nodeId == null) {
+      return NodeWidgetState(
+        node: null,
+        nodes: children.right
+      );
+    }
+
+    final node = await _getNodeUseCase.call(nodeId);
+
+    return node.fold(
+      (left) {
+        glogger.i(left, stackTrace: left.stackTrace);
+        return NodeWidgetState();
+      },
+      (node) async {
+        if (!(node is Folder)) {
+          return NodeWidgetState(node: node);
+        }
+        
+        return children.fold(
+          (left) {
+            glogger.e(left);
+            return NodeWidgetState();
+          },
+          (children) {
+            return NodeWidgetState(
+              node: node,
+              nodes: children
+            );
+          }
+        );
+      }
     );
   }
 

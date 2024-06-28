@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:editor_riverpod/src/core/application/services/hashing_service.dart';
 import 'package:editor_riverpod/src/core/common/constants/keys.dart';
 import 'package:editor_riverpod/src/core/infrastructure/data_sources/key_value_storage/key_value_storage_data_source.dart';
@@ -12,13 +14,15 @@ import '../../application/errors/exceptions.dart';
 import '../../application/services/auth_service.dart';
 
 class AESAuthServiceImpl extends ChangeNotifier implements AuthService {
+  final logger = Logger();
+  final passwordChangeCont = StreamController<void>.broadcast();
+
   final KeyValueStorageDataSource runtimeStorage;
   final KeyValueStorageDataSource secureStorage;
   final RSAEncryptionService encryptionService;
   final HashingService hashingService;
   final AESEncryptionService aesServ;
   final KeyPemConverter pemConverter;
-  final logger = Logger();
 
   AESAuthServiceImpl({
     required this.runtimeStorage, 
@@ -94,7 +98,16 @@ class AESAuthServiceImpl extends ChangeNotifier implements AuthService {
 
     // save new aes key
     await secureStorage.write(StorageKeys.aesKey, newAesKey);
+    await runtimeStorage.write(StorageKeys.aesKey, newAesKey);
+
+    // notify everyone interested
+    passwordChangeCont.add(null);
 
     return const Right(null);
+  }
+  
+  @override
+  Stream<void> watchPasswordChange() {
+    return passwordChangeCont.stream;
   }
 }

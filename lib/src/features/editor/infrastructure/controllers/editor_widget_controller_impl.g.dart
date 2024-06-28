@@ -7,7 +7,7 @@ part of 'editor_widget_controller_impl.dart';
 // **************************************************************************
 
 String _$editorWidgetControllerImplHash() =>
-    r'fdc69c479ce363b74c9ba47237ab95478064b881';
+    r'423995d01cb13298c2d1c535776f71440f669202';
 
 /// See also [EditorWidgetControllerImpl].
 @ProviderFor(EditorWidgetControllerImpl)

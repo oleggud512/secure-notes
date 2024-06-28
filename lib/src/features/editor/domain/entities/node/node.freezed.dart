@@ -37,10 +37,19 @@ mixin _$Node {
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
   NodeState get state => throw _privateConstructorUsedError;
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get isDecryptionError => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         $default, {
     required TResult Function(
             String id,
@@ -50,7 +59,9 @@ mixin _$Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         folder,
     required TResult Function(
             String id,
@@ -59,14 +70,23 @@ mixin _$Node {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         note,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult? Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult? Function(
             String id,
@@ -76,7 +96,9 @@ mixin _$Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult? Function(
             String id,
@@ -85,14 +107,23 @@ mixin _$Node {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult Function(
             String id,
@@ -102,7 +133,9 @@ mixin _$Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult Function(
             String id,
@@ -111,7 +144,9 @@ mixin _$Node {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
     required TResult orElse(),
   }) =>
@@ -154,7 +189,9 @@ abstract class $NodeCopyWith<$Res> {
       String title,
       DateTime createdAt,
       DateTime updatedAt,
-      NodeState state});
+      NodeState state,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      bool isDecryptionError});
 }
 
 /// @nodoc
@@ -176,6 +213,7 @@ class _$NodeCopyWithImpl<$Res, $Val extends Node>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? state = null,
+    Object? isDecryptionError = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -202,6 +240,10 @@ class _$NodeCopyWithImpl<$Res, $Val extends Node>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as NodeState,
+      isDecryptionError: null == isDecryptionError
+          ? _value.isDecryptionError
+          : isDecryptionError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -219,7 +261,9 @@ abstract class _$$NodeImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
       String title,
       DateTime createdAt,
       DateTime updatedAt,
-      NodeState state});
+      NodeState state,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      bool isDecryptionError});
 }
 
 /// @nodoc
@@ -238,6 +282,7 @@ class __$$NodeImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? state = null,
+    Object? isDecryptionError = null,
   }) {
     return _then(_$NodeImpl(
       id: null == id
@@ -264,6 +309,10 @@ class __$$NodeImplCopyWithImpl<$Res>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as NodeState,
+      isDecryptionError: null == isDecryptionError
+          ? _value.isDecryptionError
+          : isDecryptionError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -278,6 +327,8 @@ class _$NodeImpl implements _Node {
       required this.createdAt,
       required this.updatedAt,
       required this.state,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      this.isDecryptionError = false,
       final String? $type})
       : $type = $type ?? 'default';
 
@@ -296,13 +347,16 @@ class _$NodeImpl implements _Node {
   final DateTime updatedAt;
   @override
   final NodeState state;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  final bool isDecryptionError;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'Node(id: $id, parent: $parent, title: $title, createdAt: $createdAt, updatedAt: $updatedAt, state: $state)';
+    return 'Node(id: $id, parent: $parent, title: $title, createdAt: $createdAt, updatedAt: $updatedAt, state: $state, isDecryptionError: $isDecryptionError)';
   }
 
   @override
@@ -317,13 +371,15 @@ class _$NodeImpl implements _Node {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.state, state) || other.state == state));
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.isDecryptionError, isDecryptionError) ||
+                other.isDecryptionError == isDecryptionError));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, parent, title, createdAt, updatedAt, state);
+  int get hashCode => Object.hash(runtimeType, id, parent, title, createdAt,
+      updatedAt, state, isDecryptionError);
 
   @JsonKey(ignore: true)
   @override
@@ -334,8 +390,15 @@ class _$NodeImpl implements _Node {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         $default, {
     required TResult Function(
             String id,
@@ -345,7 +408,9 @@ class _$NodeImpl implements _Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         folder,
     required TResult Function(
             String id,
@@ -354,17 +419,27 @@ class _$NodeImpl implements _Node {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         note,
   }) {
-    return $default(id, parent, title, createdAt, updatedAt, state);
+    return $default(
+        id, parent, title, createdAt, updatedAt, state, isDecryptionError);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult? Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult? Function(
             String id,
@@ -374,7 +449,9 @@ class _$NodeImpl implements _Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult? Function(
             String id,
@@ -383,17 +460,27 @@ class _$NodeImpl implements _Node {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
   }) {
-    return $default?.call(id, parent, title, createdAt, updatedAt, state);
+    return $default?.call(
+        id, parent, title, createdAt, updatedAt, state, isDecryptionError);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult Function(
             String id,
@@ -403,7 +490,9 @@ class _$NodeImpl implements _Node {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult Function(
             String id,
@@ -412,12 +501,15 @@ class _$NodeImpl implements _Node {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(id, parent, title, createdAt, updatedAt, state);
+      return $default(
+          id, parent, title, createdAt, updatedAt, state, isDecryptionError);
     }
     return orElse();
   }
@@ -471,7 +563,9 @@ abstract class _Node implements Node {
       required final String title,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      required final NodeState state}) = _$NodeImpl;
+      required final NodeState state,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      final bool isDecryptionError}) = _$NodeImpl;
 
   factory _Node.fromJson(Map<String, dynamic> json) = _$NodeImpl.fromJson;
 
@@ -487,6 +581,9 @@ abstract class _Node implements Node {
   DateTime get updatedAt;
   @override
   NodeState get state;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get isDecryptionError;
   @override
   @JsonKey(ignore: true)
   _$$NodeImplCopyWith<_$NodeImpl> get copyWith =>
@@ -508,7 +605,9 @@ abstract class _$$FolderImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
       DateTime updatedAt,
       NodeState state,
       @JsonKey(includeToJson: false, includeFromJson: false)
-      List<Node> children});
+      List<Node> children,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      bool isDecryptionError});
 }
 
 /// @nodoc
@@ -529,6 +628,7 @@ class __$$FolderImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? state = null,
     Object? children = null,
+    Object? isDecryptionError = null,
   }) {
     return _then(_$FolderImpl(
       id: null == id
@@ -559,6 +659,10 @@ class __$$FolderImplCopyWithImpl<$Res>
           ? _value._children
           : children // ignore: cast_nullable_to_non_nullable
               as List<Node>,
+      isDecryptionError: null == isDecryptionError
+          ? _value.isDecryptionError
+          : isDecryptionError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -575,6 +679,8 @@ class _$FolderImpl implements Folder {
       required this.state,
       @JsonKey(includeToJson: false, includeFromJson: false)
       final List<Node> children = const [],
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      this.isDecryptionError = false,
       final String? $type})
       : _children = children,
         $type = $type ?? 'folder';
@@ -604,12 +710,16 @@ class _$FolderImpl implements Folder {
     return EqualUnmodifiableListView(_children);
   }
 
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  final bool isDecryptionError;
+
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'Node.folder(id: $id, parent: $parent, title: $title, createdAt: $createdAt, updatedAt: $updatedAt, state: $state, children: $children)';
+    return 'Node.folder(id: $id, parent: $parent, title: $title, createdAt: $createdAt, updatedAt: $updatedAt, state: $state, children: $children, isDecryptionError: $isDecryptionError)';
   }
 
   @override
@@ -625,13 +735,23 @@ class _$FolderImpl implements Folder {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.state, state) || other.state == state) &&
-            const DeepCollectionEquality().equals(other._children, _children));
+            const DeepCollectionEquality().equals(other._children, _children) &&
+            (identical(other.isDecryptionError, isDecryptionError) ||
+                other.isDecryptionError == isDecryptionError));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, parent, title, createdAt,
-      updatedAt, state, const DeepCollectionEquality().hash(_children));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      parent,
+      title,
+      createdAt,
+      updatedAt,
+      state,
+      const DeepCollectionEquality().hash(_children),
+      isDecryptionError);
 
   @JsonKey(ignore: true)
   @override
@@ -642,8 +762,15 @@ class _$FolderImpl implements Folder {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         $default, {
     required TResult Function(
             String id,
@@ -653,7 +780,9 @@ class _$FolderImpl implements Folder {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         folder,
     required TResult Function(
             String id,
@@ -662,17 +791,27 @@ class _$FolderImpl implements Folder {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         note,
   }) {
-    return folder(id, parent, title, createdAt, updatedAt, state, children);
+    return folder(id, parent, title, createdAt, updatedAt, state, children,
+        isDecryptionError);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult? Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult? Function(
             String id,
@@ -682,7 +821,9 @@ class _$FolderImpl implements Folder {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult? Function(
             String id,
@@ -691,18 +832,27 @@ class _$FolderImpl implements Folder {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
   }) {
-    return folder?.call(
-        id, parent, title, createdAt, updatedAt, state, children);
+    return folder?.call(id, parent, title, createdAt, updatedAt, state,
+        children, isDecryptionError);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult Function(
             String id,
@@ -712,7 +862,9 @@ class _$FolderImpl implements Folder {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult Function(
             String id,
@@ -721,12 +873,15 @@ class _$FolderImpl implements Folder {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
     required TResult orElse(),
   }) {
     if (folder != null) {
-      return folder(id, parent, title, createdAt, updatedAt, state, children);
+      return folder(id, parent, title, createdAt, updatedAt, state, children,
+          isDecryptionError);
     }
     return orElse();
   }
@@ -782,7 +937,9 @@ abstract class Folder implements Node {
       required final DateTime updatedAt,
       required final NodeState state,
       @JsonKey(includeToJson: false, includeFromJson: false)
-      final List<Node> children}) = _$FolderImpl;
+      final List<Node> children,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      final bool isDecryptionError}) = _$FolderImpl;
 
   factory Folder.fromJson(Map<String, dynamic> json) = _$FolderImpl.fromJson;
 
@@ -800,6 +957,9 @@ abstract class Folder implements Node {
   NodeState get state;
   @JsonKey(includeToJson: false, includeFromJson: false)
   List<Node> get children;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get isDecryptionError;
   @override
   @JsonKey(ignore: true)
   _$$FolderImplCopyWith<_$FolderImpl> get copyWith =>
@@ -820,7 +980,9 @@ abstract class _$$NoteImplCopyWith<$Res> implements $NodeCopyWith<$Res> {
       DateTime createdAt,
       DateTime updatedAt,
       NodeState state,
-      String content});
+      String content,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      bool isDecryptionError});
 }
 
 /// @nodoc
@@ -840,6 +1002,7 @@ class __$$NoteImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? state = null,
     Object? content = null,
+    Object? isDecryptionError = null,
   }) {
     return _then(_$NoteImpl(
       id: null == id
@@ -870,6 +1033,10 @@ class __$$NoteImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      isDecryptionError: null == isDecryptionError
+          ? _value.isDecryptionError
+          : isDecryptionError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -885,6 +1052,8 @@ class _$NoteImpl implements Note {
       required this.updatedAt,
       required this.state,
       this.content = "",
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      this.isDecryptionError = false,
       final String? $type})
       : $type = $type ?? 'note';
 
@@ -907,13 +1076,16 @@ class _$NoteImpl implements Note {
   @override
   @JsonKey()
   final String content;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  final bool isDecryptionError;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'Node.note(id: $id, parent: $parent, title: $title, createdAt: $createdAt, updatedAt: $updatedAt, state: $state, content: $content)';
+    return 'Node.note(id: $id, parent: $parent, title: $title, createdAt: $createdAt, updatedAt: $updatedAt, state: $state, content: $content, isDecryptionError: $isDecryptionError)';
   }
 
   @override
@@ -929,13 +1101,15 @@ class _$NoteImpl implements Note {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.state, state) || other.state == state) &&
-            (identical(other.content, content) || other.content == content));
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.isDecryptionError, isDecryptionError) ||
+                other.isDecryptionError == isDecryptionError));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, parent, title, createdAt, updatedAt, state, content);
+  int get hashCode => Object.hash(runtimeType, id, parent, title, createdAt,
+      updatedAt, state, content, isDecryptionError);
 
   @JsonKey(ignore: true)
   @override
@@ -946,8 +1120,15 @@ class _$NoteImpl implements Note {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         $default, {
     required TResult Function(
             String id,
@@ -957,7 +1138,9 @@ class _$NoteImpl implements Note {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         folder,
     required TResult Function(
             String id,
@@ -966,17 +1149,27 @@ class _$NoteImpl implements Note {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)
         note,
   }) {
-    return note(id, parent, title, createdAt, updatedAt, state, content);
+    return note(id, parent, title, createdAt, updatedAt, state, content,
+        isDecryptionError);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult? Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult? Function(
             String id,
@@ -986,7 +1179,9 @@ class _$NoteImpl implements Note {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult? Function(
             String id,
@@ -995,17 +1190,27 @@ class _$NoteImpl implements Note {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
   }) {
-    return note?.call(id, parent, title, createdAt, updatedAt, state, content);
+    return note?.call(id, parent, title, createdAt, updatedAt, state, content,
+        isDecryptionError);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String? parent, String title,
-            DateTime createdAt, DateTime updatedAt, NodeState state)?
+    TResult Function(
+            String id,
+            String? parent,
+            String title,
+            DateTime createdAt,
+            DateTime updatedAt,
+            NodeState state,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         $default, {
     TResult Function(
             String id,
@@ -1015,7 +1220,9 @@ class _$NoteImpl implements Note {
             DateTime updatedAt,
             NodeState state,
             @JsonKey(includeToJson: false, includeFromJson: false)
-            List<Node> children)?
+            List<Node> children,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         folder,
     TResult Function(
             String id,
@@ -1024,12 +1231,15 @@ class _$NoteImpl implements Note {
             DateTime createdAt,
             DateTime updatedAt,
             NodeState state,
-            String content)?
+            String content,
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            bool isDecryptionError)?
         note,
     required TResult orElse(),
   }) {
     if (note != null) {
-      return note(id, parent, title, createdAt, updatedAt, state, content);
+      return note(id, parent, title, createdAt, updatedAt, state, content,
+          isDecryptionError);
     }
     return orElse();
   }
@@ -1084,7 +1294,9 @@ abstract class Note implements Node {
       required final DateTime createdAt,
       required final DateTime updatedAt,
       required final NodeState state,
-      final String content}) = _$NoteImpl;
+      final String content,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      final bool isDecryptionError}) = _$NoteImpl;
 
   factory Note.fromJson(Map<String, dynamic> json) = _$NoteImpl.fromJson;
 
@@ -1101,6 +1313,9 @@ abstract class Note implements Node {
   @override
   NodeState get state;
   String get content;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get isDecryptionError;
   @override
   @JsonKey(ignore: true)
   _$$NoteImplCopyWith<_$NoteImpl> get copyWith =>

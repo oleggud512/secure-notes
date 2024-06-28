@@ -1,5 +1,6 @@
 import 'package:editor_riverpod/src/core/common/debounce.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
+import 'package:editor_riverpod/src/core/common/loggler.dart';
 import 'package:editor_riverpod/src/features/editor/infrastructure/controllers/editor_widget_controller_impl.dart';
 import 'package:editor_riverpod/src/features/editor/presentation/editor/editor_widget_controller.dart';
 import 'package:editor_riverpod/src/features/editor/presentation/editor/editor_widget_state.dart';
@@ -43,7 +44,9 @@ class _EditorWidgetState extends ConsumerState<EditorWidget> {
     final state = this.state;
     return state.when(
       data: (state) => buildWidget(context, state),
-      error: (e, st) => Center(child: Text('something went wrong'.hardcoded)),
+      error: (e, st) => Center(
+        child: Text('something went wrong'.hardcoded)
+      ),
       loading: () => state.value == null 
         ? Center(child: CircularProgressIndicator())
         : buildWidget(context, state.value!)
@@ -51,13 +54,23 @@ class _EditorWidgetState extends ConsumerState<EditorWidget> {
   }
 
   Widget buildWidget(BuildContext context, EditorWidgetState state) {
-    if (state.note == null) return Center(
-      child: Text('Open a note'.hardcoded, 
-        style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-          color: Theme.of(context).hintColor
+    glogger.i("we are building the editor.... is decryption error = ${state?.note?.isDecryptionError}");
+    if (state.note == null) {
+      return Center(
+        child: Text('Open a note'.hardcoded, 
+          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+            color: Theme.of(context).hintColor
+          )
         )
-      )
-    );
+      );
+    }
+    
+    if (state.note!.isDecryptionError == true) {
+      return Center(
+        child: Text("INCORRECT PASSWORD".hardcoded)
+      );
+    }
+
     return Form(
       key: formKey,
       child: Column(

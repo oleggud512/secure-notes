@@ -15,7 +15,9 @@ class Node with _$Node {
     required DateTime createdAt,
     required DateTime updatedAt,
     required NodeState state,
-
+    
+    @JsonKey(includeToJson: false, includeFromJson: false) // ignore: invalid_annotation_target
+    @Default(false) bool isDecryptionError
   }) = _Node;
 
   @FreezedUnionValue(DbNodeTypes.folder)
@@ -30,6 +32,9 @@ class Node with _$Node {
     @Default([]) 
     @JsonKey(includeToJson: false, includeFromJson: false) // ignore: invalid_annotation_target
     List<Node> children,
+
+    @JsonKey(includeToJson: false, includeFromJson: false) // ignore: invalid_annotation_target
+    @Default(false) bool isDecryptionError
   }) = Folder;
 
   @FreezedUnionValue(DbNodeTypes.note)
@@ -41,7 +46,10 @@ class Node with _$Node {
     required DateTime updatedAt,
     required NodeState state,
 
-    @Default("") String content
+    @Default("") String content,
+
+    @JsonKey(includeToJson: false, includeFromJson: false) // ignore: invalid_annotation_target
+    @Default(false) bool isDecryptionError
   }) = Note;
   
 
