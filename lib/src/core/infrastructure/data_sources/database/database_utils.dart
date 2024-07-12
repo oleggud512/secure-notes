@@ -81,7 +81,7 @@ class DbCreationHelper {
     createNodesUpdatedAtUpdateTrigger,
   ];
 
-  static Future<void> initializeDatabase(Database db) async {
+  static Future<void> initializeDatabaseSchema(Database db) async {
     for (final script in creationSequence) {
       await db.execute(script);
     }

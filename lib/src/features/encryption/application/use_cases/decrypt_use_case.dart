@@ -1,19 +1,14 @@
-import 'dart:convert';
-
 import 'package:editor_riverpod/src/features/editor/application/exceptions.dart';
 import 'package:editor_riverpod/src/features/encryption/application/services/aes_encryption/aes_encryption_service.dart';
 import 'package:editor_riverpod/src/features/encryption/infrastructure/services/aes_encryption/aes_encryption_service_impl.dart';
 import 'package:either_dart/either.dart';
-import 'package:pointycastle/export.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/common/constants/keys.dart';
 import '../../../../core/external/data_sources/key_value_storage/runtime_storage_provider.dart';
 import '../../../../core/infrastructure/data_sources/key_value_storage/key_value_storage_data_source.dart';
 import '../../infrastructure/services/rsa_encryption/key_pem_converter_impl.dart';
-import '../../infrastructure/services/rsa_encryption/rsa_encryption_service_impl.dart';
 import '../services/rsa_encryption/key_pem_converter.dart';
-import '../services/rsa_encryption/rsa_encryption_service.dart';
 
 part 'decrypt_use_case.g.dart';
 
@@ -58,7 +53,7 @@ class DecryptUseCaseImpl implements DecryptUseCase {
       return Right(res);
     } on DecryptionException catch (e) {
       return Left(e);
-    };
+    }
   }
 
 

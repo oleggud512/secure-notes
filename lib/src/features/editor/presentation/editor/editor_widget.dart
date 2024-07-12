@@ -6,7 +6,6 @@ import 'package:editor_riverpod/src/features/editor/presentation/editor/editor_w
 import 'package:editor_riverpod/src/features/editor/presentation/editor/editor_widget_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
 
 class EditorWidget extends ConsumerStatefulWidget {
   const EditorWidget({super.key});

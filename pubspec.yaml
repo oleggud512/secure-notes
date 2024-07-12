@@ -44,13 +44,15 @@ dependencies:
   sembast: ^3.4.5
   sembast_web:
   auto_route: ^8.2.0
+
   sqflite: ^2.2.8+4
+  sqflite_common_ffi: ^2.2.5
+  
   flutter_secure_storage: ^9.2.2
   device_info_plus: ^10.1.0
   encrypt: ^5.0.1
   equatable: ^2.0.5
   path: ^1.8.3
-  sqflite_common_ffi: ^2.2.5
   uuid: ^4.4.0
   either_dart: ^1.0.0
   pointycastle: ^3.7.3

@@ -28,7 +28,7 @@ void main() {
     db = await openDatabase(path_util.join(temp.path, dbName),
       version: 1,
       onCreate: (db, version) async {
-        await DbCreationHelper.initializeDatabase(db);
+        await DbCreationHelper.initializeDatabaseSchema(db);
       },
     );
 

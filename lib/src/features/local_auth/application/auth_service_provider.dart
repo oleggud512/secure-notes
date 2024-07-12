@@ -1,7 +1,6 @@
 import 'package:editor_riverpod/src/core/external/data_sources/key_value_storage/secure_storage_provider.dart';
 import 'package:editor_riverpod/src/core/infrastructure/services/hashing_service_impl.dart';
 import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/aes_auth_service_impl.dart';
-import 'package:editor_riverpod/src/features/local_auth/infrastructure/services/rsa_auth_service_impl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:editor_riverpod/src/core/common/constants/files.dart';
 import 'package:editor_riverpod/src/core/infrastructure/data_sources/database/database_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 
 class DatabaseService {
@@ -16,6 +19,10 @@ class DatabaseService {
   }
   
   Future<Database> getNotesDatabase(String name) async {
+    if (Platform.isWindows) {
+      databaseFactory = databaseFactoryFfi;
+    }
+    
     final p = await getApplicationDocumentsDirectory();
     // print('trying to open a database');
     final path = join(p.path, name);
@@ -23,7 +30,7 @@ class DatabaseService {
     return openDatabase(path,
       version: 1,
       onCreate: (db, version) async {
-        await DbCreationHelper.initializeDatabase(db);
+        await DbCreationHelper.initializeDatabaseSchema(db);
       }
     );
   }
@@ -33,6 +40,7 @@ class DatabaseService {
   }
 
   Future<Database> getRemoteDatabase() {
+    // TODO: no remote database
     return getNotesDatabase(DatabaseConstants.remoteDatabase);
   }
 
