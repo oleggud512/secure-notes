@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
+import 'package:editor_riverpod/src/core/common/loggler.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node_type.dart';
 import 'package:editor_riverpod/src/features/editor/infrastructure/controllers/node_widget_controller_impl.dart';
 import 'package:editor_riverpod/src/features/editor/presentation/node_widget/node_widget.dart';
@@ -19,8 +20,10 @@ class MainDrawer extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _MainDrawerState();
 }
 class _MainDrawerState extends ConsumerState<MainDrawer> {
-  NodeWidgetController get nodeCont => ref.watch(nodeWidgetControllerImplProvider(null).notifier);
+  // TODO: Use MainDrawerController to watch password update.
+  // Watch top-level node changes
   AsyncValue<NodeWidgetState> get state => ref.watch(nodeWidgetControllerImplProvider(null));
+  NodeWidgetController get nodeCont => ref.watch(nodeWidgetControllerImplProvider(null).notifier);
   
   void onAddNode(NodeType type) async {
     await nodeCont.addChild(type);
@@ -79,9 +82,10 @@ class _MainDrawerState extends ConsumerState<MainDrawer> {
         ]
       ),
       error: (e, st) {
-        print(e);
-        print(st);
-        return Text('er'.hardcoded);
+        glogger.e(e, stackTrace: st);
+        return Center(
+          child: Text('Main Drawer Error'.hardcoded)
+        );
       },
       loading: () => shrink
     );
