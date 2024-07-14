@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:editor_riverpod/src/core/common/build_context_ext.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
+import 'package:editor_riverpod/src/core/common/loggler.dart';
 import 'package:editor_riverpod/src/core/presentation/constants.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node_type.dart';
@@ -9,6 +10,8 @@ import 'package:editor_riverpod/src/features/editor/presentation/node_widget/nod
 import 'package:editor_riverpod/src/features/editor/presentation/node_widget/node_widget_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../widgets/rename_dialog.dart';
 
 
 class NodeWidget extends ConsumerStatefulWidget {
@@ -29,11 +32,6 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
     cont.toggleChildrenShown();
   }
 
-  bool isEditingTitle = false;
-  void toggleEditingTitle() {
-    setState(() => isEditingTitle = !isEditingTitle);
-  }
-
   void onDelete() async {
     await cont.deleteThisNode();
   }
@@ -42,9 +40,13 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
     await cont.addChild(type);
   }
 
-  Future<void> onTitleSubmitted(String newTitle) async {
-    await cont.updateTitle(newTitle);
-    toggleEditingTitle();
+  Future<void> onRename() async {
+    final newTitle = await RenameDialog(
+      oldName: state.asData!.value.node!.title
+    ).show(context);
+    if (newTitle != null) {
+      await cont.updateTitle(newTitle);
+    }
   }
 
   void onTapNode() async {
@@ -59,19 +61,18 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
   @override
   Widget build(BuildContext context) {
     final state = this.state;
-    // print('state - ${state.value?.node?.title} ${state.value?.node?.id} -- ${state.value?.nodes.length}');
     return state.when(
       data: (state) {
-        return buildWidget(state: state);
+        return buildNode(state: state);
       },
       error: (e, st) => shrink,
       loading: () => state.value == null 
         ? shrink 
-        : buildWidget(state: state.value!)
+        : buildNode(state: state.value!)
     );
   }
 
-  Widget buildWidget({
+  Widget buildNode({
     required NodeWidgetState state,
   }) {
     return Column(
@@ -82,7 +83,7 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
           child: Card(
             key: UniqueKey(),
             surfaceTintColor: state.node is Folder 
-              ? Theme.of(context).colorScheme.primaryContainer 
+              ? Theme.of(context).colorScheme.tertiary
               : Colors.white,
             child: GestureDetector(
               onTap: onTapNode,
@@ -90,29 +91,13 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   w16gap,
-                  Expanded(child: GestureDetector(
-                    onLongPress: toggleEditingTitle,
-                    child: Theme(
-                      data: ThemeData(
-                        disabledColor: state.node!.title.isEmpty 
-                          ? Theme.of(context).disabledColor 
-                          : Theme.of(context).colorScheme.onSurface
-                      ),
-                      child: TextFormField(
-                        focusNode: titleEditFocusNode,
-                        enabled: isEditingTitle,
-                        initialValue: state.node!.title,
-                        onFieldSubmitted: onTitleSubmitted,
-                        scrollPadding: EdgeInsets.zero,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
-                          hintText: 'Untitled'.hardcoded,
-                        ),
-                      ),
-                    ),
-                  )),
-                  buildPopup(state.node is Folder),
+                  Expanded(
+                    child: Text(state.node!.title.isNotEmpty 
+                      ? state.node!.title
+                      : "Untitled".hardcoded
+                    )
+                  ),
+                  buildPopupButton(state.node is Folder),
                   w8gap
                 ]
               ),
@@ -153,10 +138,9 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
     );
     if (state.node is! Folder) return draggable; 
     return DragTarget<(String who, String? from)>(
-      onAccept: (node) async {
-        // print('data accepted - invider\'s parent=${node.$2} me = ${state.node?.id}');
-        if (node.$2 == state.node?.id) return;
-        await cont.moveHere(node);
+      onAcceptWithDetails: (node) async {
+        if (node.data.$2 == state.node?.id) return;
+        await cont.moveHere(node.data);
       },
       builder: (context, candidateData, rejectedData) {
         return draggable;
@@ -164,7 +148,7 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
     );
   }
 
-  Widget buildPopup(bool isFolder) {
+  Widget buildPopupButton(bool isFolder) {
     return PopupMenuButton(
       icon: Icon(Icons.more_vert_rounded, color: Theme.of(context).hintColor),
       tooltip: '',
@@ -179,6 +163,10 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
             onTap: () => onAdd(NodeType.note)
           ),
         ],
+        PopupMenuItem(
+          child: Text('Rename'.hardcoded),
+          onTap: onRename
+        ),
         PopupMenuItem(
           child: Text('Delete'.hardcoded, 
             style: TextStyle(color: Colors.red)

@@ -42,6 +42,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
   };
 
   FutureOr<NodeWidgetState> build(String? nodeId) async {
+    // TODO: ???
     final link = ref.keepAlive();
     final timer = Timer(const Duration(minutes: 5), () {
       link.close(); 
@@ -50,6 +51,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
       timer.cancel();
     });
 
+    // Update state of this node if it's currently active and modified
     ref.listen(editorWidgetControllerImplProvider, (previous, next) { 
       if (nodeId != null && next.value?.note?.id == nodeId) {
         state = AsyncData(state.value!.copyWith(node: next.value!.note));
@@ -131,6 +133,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
   
   @override
   Future<Either<AppException, String>> updateTitle(String newTitle) async {
+    // TODO: what if there will be more types of nodes?
     final updatedNode = state.value!.node is Note 
       ? await _updateNoteUseCase.call(state.value!.node!.copyWith(title: newTitle) as Note)
       : await _updateFolderUseCase.call(state.value!.node!.copyWith(title: newTitle) as Folder);

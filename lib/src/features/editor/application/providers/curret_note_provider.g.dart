@@ -6,7 +6,7 @@ part of 'curret_note_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentNoteHash() => r'f230f192755dbe60ef8175ea3f2a029abcfffc8d';
+String _$currentNoteHash() => r'2bf53c603e7506166c37ea6cc29f5bbd8837e0ba';
 
 /// See also [CurrentNote].
 @ProviderFor(CurrentNote)

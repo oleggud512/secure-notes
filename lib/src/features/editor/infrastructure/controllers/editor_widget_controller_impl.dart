@@ -22,13 +22,13 @@ class EditorWidgetControllerImpl extends _$EditorWidgetControllerImpl
 
   GetNodeUseCase get _getNodeUseCase => ref.watch(getNodeUseCaseProvider);
   UpdateNoteUseCase get _updateNoteUseCase => ref.watch(updateNoteUseCaseProvider);
-  String? get _currentNote => ref.watch(currentNoteProvider);
+  String? get _currentNoteId => ref.watch(currentNoteProvider);
   AuthService get _authService => ref.watch(authServiceProvider);
 
   StreamSubscription<void>? _passwordChangeStream;
 
   void _passwordChangeListener(void _) async {
-    final noteId = _currentNote;
+    final noteId = _currentNoteId;
     if (noteId == null) return;
     final note = await getNote(noteId);
     state = AsyncData(state.value!.copyWith(note: note));
@@ -36,7 +36,7 @@ class EditorWidgetControllerImpl extends _$EditorWidgetControllerImpl
   
   @override
   FutureOr<EditorWidgetState> build() async {
-    final noteId = _currentNote;
+    final noteId = _currentNoteId;
     _passwordChangeStream = _authService.watchPasswordChange()
       .listen(_passwordChangeListener);
     ref.onDispose(() {
