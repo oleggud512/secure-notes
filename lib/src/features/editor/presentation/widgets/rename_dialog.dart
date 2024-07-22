@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
 import 'package:editor_riverpod/src/core/presentation/constants.dart';
 import 'package:editor_riverpod/src/core/presentation/dialog_widget.dart';
@@ -39,27 +38,27 @@ class _RenameDialogState extends State<RenameDialog> {
     return Dialog(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: p400
+          maxHeight: p400,
+          maxWidth: p400
         ),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: cont,
-                  onFieldSubmitted: (_) {
-                    onRename();
-                  },
-                ),
-                FilledButton(
-                  child: Text('Rename'.hardcoded),
-                  onPressed: onRename
-                )
-              ]
-            )
+        child: Padding(
+          padding: const EdgeInsets.all(p24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: cont,
+                onFieldSubmitted: (_) {
+                  onRename();
+                },
+              ),
+              h24gap,
+              FilledButton(
+                child: Text('Rename'.hardcoded),
+                onPressed: onRename
+              )
+            ]
           )
         )
       )

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:editor_riverpod/src/core/application/errors/int.dart';
 import 'package:editor_riverpod/src/core/common/build_context_ext.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
 import 'package:editor_riverpod/src/core/common/loggler.dart';
@@ -75,33 +76,43 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
   Widget buildNode({
     required NodeWidgetState state,
   }) {
+    final node = state.node!;
     return Column(
       key: Key(state.node!.id),
       children: [
         draggableNodeWrapper(
           state: state,
-          child: Card(
-            key: UniqueKey(),
-            surfaceTintColor: state.node is Folder 
-              ? Theme.of(context).colorScheme.tertiary
-              : Colors.white,
-            child: GestureDetector(
-              onTap: onTapNode,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  w16gap,
-                  Expanded(
-                    child: Text(state.node!.title.isNotEmpty 
-                      ? state.node!.title
-                      : "Untitled".hardcoded
-                    )
-                  ),
-                  buildPopupButton(state.node is Folder),
-                  w8gap
-                ]
-              ),
-            )
+          child: Tooltip(
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(p4)
+            ),
+            message: node.title,
+            waitDuration: 1.s,
+            child: Card(
+              key: UniqueKey(),
+              surfaceTintColor: state.node is Folder 
+                ? Theme.of(context).colorScheme.tertiary
+                : Colors.white,
+              child: GestureDetector(
+                onTap: onTapNode,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    w16gap,
+                    Expanded(
+                      child: Text(node.title.isNotEmpty 
+                        ? node.title
+                        : "Untitled".hardcoded,
+                        overflow: TextOverflow.ellipsis
+                      )
+                    ),
+                    buildPopupButton(state.node is Folder),
+                    w8gap
+                  ]
+                ),
+              )
+            ),
           ),
         ),
         if (state.isChildrenShown) buildChildren(state.nodes)

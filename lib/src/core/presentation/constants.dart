@@ -8,6 +8,9 @@ const h8gap = SizedBox(height: 8);
 const w8gap = SizedBox(width: 8);
 const h16gap = SizedBox(height: 16);
 const w16gap = SizedBox(width: 16);
+const h24gap = SizedBox(height: 24);
+const w24gap = SizedBox(width: 24);
+
 
 const double p4 = 4.0;
 const double p8 = 8.0;
