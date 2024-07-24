@@ -15,7 +15,7 @@ void main() {
 
   setUpAll(() async {
     FlutterSecureStorage.setMockInitialValues({});
-    await container.read(authServiceProvider).signInLocally('password');
+    await container.read(authServiceProvider).localSignIn('password');
   });
 
   // setUp(() async {

@@ -19,7 +19,7 @@ class LocalSignInUseCase {
   LocalSignInUseCase(this.authService);
 
   Future<Either<LocalAuthException, void>> call(String password) async {
-    final res = authService.signInLocally(password);
+    final res = authService.localSignIn(password);
     return res;
   }
 }
