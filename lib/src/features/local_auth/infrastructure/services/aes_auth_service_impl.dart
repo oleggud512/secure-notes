@@ -34,7 +34,7 @@ class AESAuthServiceImpl extends ChangeNotifier implements AuthService {
   });
 
   @override
-  Future<Either<LocalAuthException, void>> signInLocally(String password) async {
+  Future<Either<LocalAuthException, void>> localSignIn(String password) async {
     // read the hashed password from the storage
     var hashedPassword = await secureStorage.read(StorageKeys.hashedPassword);
     // generate an AES key for the passphrase
