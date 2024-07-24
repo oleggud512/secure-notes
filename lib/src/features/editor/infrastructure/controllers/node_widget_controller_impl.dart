@@ -42,6 +42,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
   };
 
   FutureOr<NodeWidgetState> build(String? nodeId) async {
+    // TODO: ???
     final link = ref.keepAlive();
     final timer = Timer(const Duration(minutes: 5), () {
       link.close(); 
@@ -50,6 +51,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
       timer.cancel();
     });
 
+    // Update state of this node if it's currently active and modified
     ref.listen(editorWidgetControllerImplProvider, (previous, next) { 
       if (nodeId != null && next.value?.note?.id == nodeId) {
         state = AsyncData(state.value!.copyWith(node: next.value!.note));
@@ -131,6 +133,7 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
   
   @override
   Future<Either<AppException, String>> updateTitle(String newTitle) async {
+    // TODO: what if there will be more types of nodes?
     final updatedNode = state.value!.node is Note 
       ? await _updateNoteUseCase.call(state.value!.node!.copyWith(title: newTitle) as Note)
       : await _updateFolderUseCase.call(state.value!.node!.copyWith(title: newTitle) as Folder);
@@ -170,21 +173,22 @@ class NodeWidgetControllerImpl extends _$NodeWidgetControllerImpl
   }
   
   @override
-  Future<Either<AppException, void>> moveHere((String who, String? from) toMove) async {
-    // get a node
-    final node = await _getNodeUseCase.call(toMove.$1);
+  Future<Either<AppException, void>> moveHere(Node externalNode) async {
+    if (state.value!.node?.id == externalNode.parent) {
+      return Left(AppException("Node is already here"));
+    }
 
     late Either<AppException, Node> updated;
     // update node parent and retrieve either Folder or Note
-    if (node.right is Note) {
-      updated = await _updateNoteUseCase.call(node.right.copyWith(parent: nodeId) as Note);
-    } else if (node.right is Folder) {
-      updated = await _updateFolderUseCase.call(node.right.copyWith(parent: nodeId) as Folder);
+    if (externalNode is Note) {
+      updated = await _updateNoteUseCase.call(externalNode.copyWith(parent: nodeId) as Note);
+    } else if (externalNode is Folder) {
+      updated = await _updateFolderUseCase.call(externalNode.copyWith(parent: nodeId) as Folder);
     }
 
     // nodes that have been changed
-    await ref.watch(nodeRefresherProvider(toMove.$1)).refresh();
-    await ref.watch(nodeRefresherProvider(toMove.$2)).refresh();
+    await ref.read(nodeRefresherProvider(externalNode.id)).refresh();
+    await ref.read(nodeRefresherProvider(externalNode.parent)).refresh();
     await refresh();
 
     return updated.map((right) => null);

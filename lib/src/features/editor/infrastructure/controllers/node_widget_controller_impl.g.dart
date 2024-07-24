@@ -7,7 +7,7 @@ part of 'node_widget_controller_impl.dart';
 // **************************************************************************
 
 String _$nodeWidgetControllerImplHash() =>
-    r'd856ba88422078250aab454d14854b77fe5c5244';
+    r'3b6988aada365f00ef47ad314911f3641217a0e4';
 
 /// Copied from Dart SDK
 class _SystemHash {
