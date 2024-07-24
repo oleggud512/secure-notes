@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:editor_riverpod/src/core/common/hardcoded.dart';
 import 'package:editor_riverpod/src/core/common/loggler.dart';
+import 'package:editor_riverpod/src/features/editor/domain/entities/node/node.dart';
 import 'package:editor_riverpod/src/features/editor/domain/entities/node/node_type.dart';
 import 'package:editor_riverpod/src/features/editor/infrastructure/controllers/node_widget_controller_impl.dart';
 import 'package:editor_riverpod/src/features/editor/presentation/node_widget/node_widget.dart';
@@ -66,7 +67,7 @@ class _MainDrawerState extends ConsumerState<MainDrawer> {
             ),
           ),
           ...state.nodes.map((n) => NodeWidget(node: n)),
-          DragTarget<(String who, String from)>(
+          DragTarget<Node>(
             onAcceptWithDetails: (data) {
               nodeCont.moveHere(data.data);
             },

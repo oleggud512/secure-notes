@@ -125,9 +125,9 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
     required Widget child
   }) {
 
-    final draggable = Draggable<(String who, String? from)>(
+    final draggable = Draggable<Node>(
       key: UniqueKey(),
-      data: (state.node!.id, state.node!.parent),
+      data: state.node!,
       child: child, 
       feedback: Container(
         width: p256,
@@ -148,9 +148,9 @@ class _NodeWidgetState extends ConsumerState<NodeWidget> {
       )
     );
     if (state.node is! Folder) return draggable; 
-    return DragTarget<(String who, String? from)>(
+    return DragTarget<Node>(
       onAcceptWithDetails: (node) async {
-        if (node.data.$2 == state.node?.id) return;
+        if (node.data.id == state.node?.id) return;
         await cont.moveHere(node.data);
       },
       builder: (context, candidateData, rejectedData) {
